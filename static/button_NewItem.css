@@ -23,9 +23,9 @@
   }
   
   #NewItem:hover {
-    color: #82ffc9;
+    color: #ea00ff;
     box-shadow: inset 0 0 10px #1bb2fd66,
-      0 0 9px 3px rgba(27, 253, 156, 0.2);
+      0 0 9px 3px #1bb2fd66;
   }
   
   #NewItem:before {

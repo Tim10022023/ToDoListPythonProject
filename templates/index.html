@@ -1,14 +1,50 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To-Do Liste</title>
-    <link rel="stylesheet" href="../static/test.css">
-    <link rel="stylesheet" href="../static/button_NewItem.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../static/test.css" />
+    <link rel="stylesheet" href="../static/button_NewItem.css" />
+  </head>
+  <body>
     <h1>To-Do-Liste von Tim, Niklas & Noah</h1>
-    <Button id="NewItem">New Item </Button>
-</body>
+
+    <!-- Tabelle zur Anzeige der Daten -->
+    <table id="daten-tabelle">
+      <thead>
+        <tr>
+          <th>Empfangene Daten</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Hier werden die empfangenen Daten dynamisch eingefügt -->
+      </tbody>
+    </table>
+
+    <button id="NewItem" onclick="oeffnePopup()">New Item</button>
+
+    <script>
+      window.addEventListener(
+        "message",
+        function (event) {
+          var empfangeneDaten = event.data;
+          console.log("Empfangene Daten: " + empfangeneDaten);
+
+          // Hier fügst du die empfangenen Daten in die Tabelle ein
+          var tbody = document.querySelector("#daten-tabelle tbody");
+          var newRow = tbody.insertRow();
+          var cell = newRow.insertCell(0); // Füge die Daten in die erste Spalte der Tabelle ein
+          cell.textContent = empfangeneDaten;
+        },
+        false
+      );
+    </script>
+
+    <script>
+      function oeffnePopup() {
+        var popup = window.open("/popup", "_blank", "width=400,height=400");
+      }
+    </script>
+  </body>
 </html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup-Seite</title>
+</head>
+<body>
+    <h2>Popup-Seite</h2>
+
+    <form method="POST">
+        <label for="daten">Daten eingeben:</label>
+        <input type="text" id="daten" name="daten" required><br>
+        <button type="button" onclick="speichereDaten()">Speichern</button>
+    </form>
+
+    <script>
+        function speichereDaten() {
+            var eingabeDaten = document.getElementById('daten').value;
+            window.opener.postMessage(eingabeDaten, window.location.origin);
+            window.close();
+        }
+    </script>
+</body>
+</html>
