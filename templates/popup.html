@@ -12,13 +12,21 @@
     <form method="POST">
         <label for="daten">Daten eingeben:</label>
         <input type="text" id="daten" name="daten" required><br>
-        <button type="button" onclick="speichereDaten()">Speichern</button>
+
+        <label for="date">Datum eingeben:</label>
+        <input type="date" id="date" name="date">
+
+        <button id="abbrechen" type="button" onclick="closeWindow()">Abbrechen</button>
+        <button id="save" type="button" onclick="speichereDaten()">Speichern</button>
     </form>
 
     <script>
         function speichereDaten() {
             var eingabeDaten = document.getElementById('daten').value;
             window.opener.postMessage(eingabeDaten, window.location.origin);
+            window.close();
+        }
+        function closeWindow() {
             window.close();
         }
     </script>
