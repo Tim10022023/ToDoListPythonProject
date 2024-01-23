@@ -5,24 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To-Do Liste</title>
     <link rel="stylesheet" href="../static/test.css" />
-    <link rel="stylesheet" href="../static/button_NewItem.css" />
+    <link rel="stylesheet" href="../static/button_index.css" />
   </head>
   <body>
     <h1>To-Do-Liste von Tim, Niklas & Noah</h1>
-<button id="NewItem" onclick="oeffnePopup()">New Item</button>
+    <div>
+      <button id="NewItem" onclick="oeffnePopup()">New Item</button>
+      <button id="Placeholder" >Placeholder</button>
+      <button id="Placeholder" >Placeholder</button>
+      <button id="Placeholder" >Placeholder</button>
+
+    </div>
     <table id="daten-tabelle">
       <thead>
         <tr>
           <th>Empfangene Daten</th>
-            
         </tr>
       </thead>
       <tbody>
         <!--hier erscheint die Werte-->
       </tbody>
     </table>
-
-  
 
     <script>
       window.addEventListener(
@@ -42,7 +45,7 @@
     </script>
 
     <script>
-        // Popup wird geöffnet
+      // Popup wird geöffnet
       function oeffnePopup() {
         var popup = window.open("/popup", "_blank", "width=400,height=400");
       }
