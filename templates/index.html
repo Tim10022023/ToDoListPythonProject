@@ -15,28 +15,41 @@
       <button id="Placeholder">Placeholder</button>
       <button id="Placeholder">Placeholder</button>
     </div>
-    <table id="daten-tabelle">
+    <table id="aufgaben-tabelle">
       <thead>
         <tr>
           <th>Empfangene Daten</th>
         </tr>
       </thead>
-      <tbody>
-        <!--hier erscheint die Werte-->
+      <tbody id="aufgabe">
+          <!--hier erscheint die Werte-->
       </tbody>
     </table>
+
+    <table id="datum-tabelle">
+        <thead>
+          <tr>
+            <th>Datum</th>
+          </tr>
+        </thead>
+        <tbody id="datum">
+            <!--hier erscheint das Datum-->
+        </tbody>
+      </table>
+
 
     <script>
       window.addEventListener(
         "message",
         function (event) {
-          var empfangeneDaten = event.data;
-
+          var empfangeneDaten = event.data.EingabeDaten;
+          var empfangenesDatum = event.data.eingabeDatum;
           // Hier werden die empfangenen Daten in die Tabelle ein
-          var tbody = document.querySelector("#daten-tabelle tbody");
-          var newRow = tbody.insertRow();
-          var cell = newRow.insertCell(0); // Füge die Daten in die erste Spalte der Tabelle ein
-          cell.textContent = empfangeneDaten;
+          var zielElementDaten = document.querySelector("#aufgabe");
+          zielElementDaten.textContent = empfangeneDaten;
+
+          var ZielElementDatum = document.querySelector("#datum");
+          ZielElementDatum.textContent = empfangenesDatum;
         },
         false
       );

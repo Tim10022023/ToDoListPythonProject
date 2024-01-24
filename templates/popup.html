@@ -1,34 +1,46 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Popup-Seite</title>
-    <link rel="stylesheet" href="../static/style_popup.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../static/style_popup.css" />
+  </head>
+  <body>
     <h2>Popup-Seite</h2>
 
     <form method="POST">
-        <label for="daten">Daten eingeben:</label>
-        <input type="text" id="daten" name="daten" required><br>
+      <label for="daten">Daten eingeben:</label>
+      <input type="text" id="daten" name="daten" required /><br />
 
-        <label for="date">Datum eingeben:</label>
-        <input type="date" id="date" name="date"><br>
+      <label for="date">Datum eingeben:</label>
+      <input type="date" id="date" name="date" /><br />
 
-        <button id="abbrechen" type="button" onclick="closeWindow()">Abbrechen</button>
-        <button id="save" type="button" onclick="speichereDaten()">Speichern</button>
+      <button id="abbrechen" type="button" onclick="closeWindow()">
+        Abbrechen
+      </button>
+      <button id="save" type="button" onclick="speichereDaten()">
+        Speichern
+      </button>
     </form>
 
     <script>
-        function speichereDaten() {
-            var eingabeDaten = document.getElementById('daten').value;
-            window.opener.postMessage(eingabeDaten, window.location.origin);
-            window.close();
-        }
-        function closeWindow() {
-            window.close();
-        }
+      function speichereDaten() {
+        var eingabeDaten = document.getElementById("daten").value;
+        var eingabeDatum = document.getElementById("date").value;
+
+        var datenObjekt = {
+          eingabeDaten: eingabeDaten,
+          eingabeDatum: eingabeDatum,
+        };
+
+        window.opener.postMessage(datenObjekt, window.location.origin);
+
+        window.close();
+      }
+      function closeWindow() {
+        window.close();
+      }
     </script>
-</body>
+  </body>
 </html>
