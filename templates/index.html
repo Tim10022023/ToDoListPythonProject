@@ -1,13 +1,61 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To-Do Liste</title>
-    <link rel="stylesheet" href="../static/test.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../static/style.css" />
+    <link rel="stylesheet" href="../static/button_index.css" />
+  </head>
+  <body>
     <h1>To-Do-Liste von Tim, Niklas & Noah</h1>
-    
-</body>
+    <div>
+      <button id="NewItem" onclick="oeffnePopup()">New Item</button>
+      <button id="Placeholder">Placeholder</button>
+      <button id="Placeholder">Placeholder</button>
+      <button id="Placeholder">Placeholder</button>
+    </div>
+    <table id="aufgaben-tabelle">
+      <thead>
+        <tr>
+          <th>Empfangene Daten</th>
+        </tr>
+      </thead>
+      <tbody id="aufgabe">
+          <!--hier erscheint die Werte-->
+      </tbody>
+    </table>
+
+    <table id="datum-tabelle">
+        <thead>
+          <tr>
+            <th>Datum</th>
+          </tr>
+        </thead>
+        <tbody id="datum">
+            <!--hier erscheint das Datum-->
+        </tbody>
+      </table>
+
+
+    <script>
+      window.addEventListener(
+        "message",
+        function (event) {
+          var empfangeneDaten = event.data.EingabeDaten;
+          var empfangenesDatum = event.data.eingabeDatum;
+          // Hier werden die empfangenen Daten in die Tabelle ein
+          var zielElementDaten = document.querySelector("#aufgabe");
+          zielElementDaten.textContent = empfangeneDaten;
+
+          var ZielElementDatum = document.querySelector("#datum");
+          ZielElementDatum.textContent = empfangenesDatum;
+        },
+        false
+      );
+      function oeffnePopup() {
+        var popup = window.open("/popup", "_blank", "width=400,height=400");
+      }
+    </script>
+  </body>
 </html>
