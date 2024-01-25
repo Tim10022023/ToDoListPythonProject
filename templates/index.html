@@ -15,13 +15,14 @@
       <button id="Placeholder">Placeholder</button>
       <button id="Placeholder">Placeholder</button>
     </div>
+    <div id="tabellen-container">
     <table id="aufgaben-tabelle">
       <thead>
         <tr>
           <th>Empfangene Daten</th>
         </tr>
       </thead>
-      <tbody id="aufgabe">
+      <tbody>
           <!--hier erscheint die Werte-->
       </tbody>
     </table>
@@ -37,15 +38,15 @@
         </tbody>
       </table>
 
-
+    </div>
     <script>
       window.addEventListener(
         "message",
         function (event) {
-          var empfangeneDaten = event.data.EingabeDaten;
+          var empfangeneDaten = event.data.eingabeDaten;
           var empfangenesDatum = event.data.eingabeDatum;
           // Hier werden die empfangenen Daten in die Tabelle ein
-          var zielElementDaten = document.querySelector("#aufgabe");
+          var zielElementDaten = document.querySelector("#aufgaben-tabelle tbody");
           zielElementDaten.textContent = empfangeneDaten;
 
           var ZielElementDatum = document.querySelector("#datum");
