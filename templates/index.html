@@ -19,7 +19,7 @@
     <table id="aufgaben-tabelle">
       <thead>
         <tr>
-          <th>Empfangene Daten</th>
+          <th>Aufgabe</th>
         </tr>
       </thead>
       <tbody>
@@ -33,7 +33,7 @@
             <th>Datum</th>
           </tr>
         </thead>
-        <tbody id="datum">
+        <tbody>
             <!--hier erscheint das Datum-->
         </tbody>
       </table>
@@ -46,10 +46,14 @@
           var empfangeneDaten = event.data.eingabeDaten;
           var empfangenesDatum = event.data.eingabeDatum;
           // Hier werden die empfangenen Daten in die Tabelle ein
-          var zielElementDaten = document.querySelector("#aufgaben-tabelle tbody");
-          zielElementDaten.textContent = empfangeneDaten;
+          var tbodyDaten = document.querySelector("#aufgaben-tabelle tbody");
+          var newDaten = tbodyDaten.insertRow();
+          var ZielElementDaten = newDaten.insertCell(0);
+          ZielElementDaten.textContent = empfangeneDaten;
 
-          var ZielElementDatum = document.querySelector("#datum");
+          var tbodyDatum = document.querySelector("#datum-tabelle tbody");
+          var newDatum = tbodyDatum.insertRow();
+          var ZielElementDatum = newDatum.insertCell(0);
           ZielElementDatum.textContent = empfangenesDatum;
         },
         false
