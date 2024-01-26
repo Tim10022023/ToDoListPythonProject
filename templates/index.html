@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To-Do Liste</title>
-    <link rel="shortcut icon" href="../Bilder/favicon.ico" type="image/x-icon"><!--geht nicht-->
+    <!-- <link rel="shortcut icon" href="../Bilder/favicon.ico" type="image/x-icon">geht nicht-->
     <link rel="stylesheet" href="../static/style.css" />
     <link rel="stylesheet" href="../static/button_index.css" />
   </head>
@@ -12,34 +12,27 @@
     <h1>To-Do-Liste von Tim, Niklas & Noah</h1>
     <div>
       <button id="NewItem" onclick="oeffnePopup()">New Item</button>
-      <button id="Placeholder">Placeholder</button>
-      <button id="Placeholder">Placeholder</button>
-      <button id="Placeholder">Placeholder</button>
+      <button id="Placeholder1">Placeholder</button>
+      <button id="Placeholder2">Placeholder</button>
+      <button id="Placeholder3">Placeholder</button>
     </div>
-    <div id="tabellen-container">
-    <table id="aufgaben-tabelle">
-      <thead>
-        <tr>
-          <th>Aufgabe</th>
-        </tr>
-      </thead>
-      <tbody>
-          <!--hier erscheint die Werte-->
-      </tbody>
-    </table>
-
-    <table id="datum-tabelle">
+      <table>
         <thead>
           <tr>
+            <th>Aufgabe</th>
             <th>Datum</th>
           </tr>
         </thead>
         <tbody>
-            <!--hier erscheint das Datum-->
+          {% for eingabe in eingaben %}
+          <tr>
+            <td>{{ eingabe.daten }}</td>
+            <td>{{ eingabe.datum }}</td>
+          </tr>
+          {% endfor %}
         </tbody>
       </table>
 
-    </div>
     <script>
       window.addEventListener(
         "message",
@@ -47,15 +40,12 @@
           var empfangeneDaten = event.data.eingabeDaten;
           var empfangenesDatum = event.data.eingabeDatum;
           // Hier werden die empfangenen Daten in die Tabelle ein
-          var tbodyDaten = document.querySelector("#aufgaben-tabelle tbody");
-          var newDaten = tbodyDaten.insertRow();
-          var ZielElementDaten = newDaten.insertCell(0);
-          ZielElementDaten.textContent = empfangeneDaten;
-
-          var tbodyDatum = document.querySelector("#datum-tabelle tbody");
-          var newDatum = tbodyDatum.insertRow();
-          var ZielElementDatum = newDatum.insertCell(0);
-          ZielElementDatum.textContent = empfangenesDatum;
+          var tbody = document.querySelector("table tbody");
+          var newRow = tbody.insertRow();
+          var cellDaten = newRow.insertCell(0);
+          var cellDatum = newRow.insertCell(1);
+          cellDaten.textContent = empfangeneDaten;
+          cellDatum.textContent = empfangenesDatum;
         },
         false
       );

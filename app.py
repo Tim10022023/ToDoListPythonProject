@@ -1,24 +1,36 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///eingaben.db'
+db = SQLAlchemy(app)
 
-gespeicherte_daten = []
-gespeichertes_datum = []
+class Eingabe(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    daten = db.Column(db.String(255), nullable=False)
+    datum = db.Column(db.String(255), nullable=False)
 
-@app.route('/') #rendert/ruft startseite auf
+@app.route('/')
 def startseite():
-    return render_template('index.html', daten=gespeicherte_daten)
+    eingaben = Eingabe.query.all()
+    return render_template('index.html', eingaben=eingaben)
 
-@app.route('/popup', methods=['GET', 'POST'])
+@app.route('/popup', methods=['POST','GET'])
 def popup():
+    eingabe_daten=""
+    eingabe_datum=""
     if request.method == 'POST':
-        eingabe_daten = request.form['daten']# Extrahiere Daten aus dem Formularfeld 'daten' der POST-Anfrage
-        gespeicherte_daten.append(eingabe_daten)# Füge die empfangenen Daten zur Liste 'gespeicherte_daten' hinzu
-        eingabe_datum = request.form['date']
-        gespeichertes_datum.append(eingabe_datum)
-        return render_template('popup.html', eingabe_daten=eingabe_daten, eingabe_datum=eingabe_datum)# Rendere das HTML-Template 'popup.html' und übergebe 'eingabe_daten'
-    return render_template('popup.html')# Wenn keine POST-Anfrage vorliegt, rendere einfach das HTML-Template 'popup.html'
+        eingabe_daten = request.form["daten"]
+        eingabe_datum = request.form["date"]
 
+        neue_eingabe = Eingabe(daten=eingabe_daten, datum=eingabe_datum, id=None)
+        db.session.add(neue_eingabe)
+        db.session.commit()
+        return jsonify({"success": True})
+
+    return render_template('popup.html', eingabe_daten=eingabe_daten, eingabe_datum=eingabe_datum,)
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
