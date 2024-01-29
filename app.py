@@ -9,6 +9,7 @@ class Eingabe(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     daten = db.Column(db.String(255), nullable=False)
     datum = db.Column(db.String(255), nullable=False)
+    name = db.Column(db.String(255), nullable=False)
 
 @app.route('/')
 def startseite():
@@ -17,13 +18,15 @@ def startseite():
 
 @app.route('/popup', methods=['POST','GET'])
 def popup():
-    eingabe_daten=""
+    eingabe_daten=[]
     eingabe_datum=""
+    eingabe_name=""
     if request.method == 'POST':
         eingabe_daten = request.form["daten"]
         eingabe_datum = request.form["date"]
+        eingabe_name = request.form["name"]
 
-        neue_eingabe = Eingabe(daten=eingabe_daten, datum=eingabe_datum, id=None)
+        neue_eingabe = Eingabe(daten=eingabe_daten, datum=eingabe_datum, name=eingabe_name,)
         db.session.add(neue_eingabe)
         db.session.commit()
         #return jsonify({"success": True})

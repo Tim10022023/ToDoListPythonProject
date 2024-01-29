@@ -21,6 +21,7 @@
           <tr>
             <th>Aufgabe</th>
             <th>Datum</th>
+            <th>Name</th>
           </tr>
         </thead>
         <tbody>
@@ -28,6 +29,7 @@
           <tr>
             <td>{{ eingabe.daten }}</td>
             <td>{{ eingabe.datum }}</td>
+            <td>{{ eingabe.name }}</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -39,13 +41,16 @@
         function (event) {
           var empfangeneDaten = event.data.eingabeDaten;
           var empfangenesDatum = event.data.eingabeDatum;
+          var empfangenerName = event.data.eingabeName;
           // Hier werden die empfangenen Daten in die Tabelle ein
           var tbody = document.querySelector("table tbody");
           var newRow = tbody.insertRow();
           var cellDaten = newRow.insertCell(0);
           var cellDatum = newRow.insertCell(1);
+          var cellName = newRow.insertCell(2);
           cellDaten.textContent = empfangeneDaten;
           cellDatum.textContent = empfangenesDatum;
+          cellName.textContent = empfangenerName;
         },
         false
       );
