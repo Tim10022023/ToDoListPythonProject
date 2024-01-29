@@ -14,12 +14,20 @@ class Task(db.model):
     done = db.Column(db.Boolean, default = False)
 
     def __init__(self, content):
+        self.content = content
+        self.done = False
+    
+    def __repr__(self):
+        return "<Content %s>" % self.content
+
+db.create_all()
 
 gespeicherte_daten = []
 gespeichertes_datum = []
 
 @app.route('/') #rendert/ruft startseite auf
 def startseite():
+    gespeicherte_daten = Task.query.all()
     return render_template('index.html', daten=gespeicherte_daten)
 
 @app.route('/popup', methods=['GET', 'POST'])
