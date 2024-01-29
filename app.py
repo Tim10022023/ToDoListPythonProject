@@ -20,8 +20,8 @@ def startseite():
 @app.route('/popup', methods=['POST','GET'])
 def popup():
     eingabe_daten=[]
-    eingabe_datum=""
-    eingabe_name=""
+    eingabe_datum=[]
+    eingabe_name=[]
     if request.method == 'POST':
         eingabe_daten = request.form["daten"]
         eingabe_datum = request.form["date"]
