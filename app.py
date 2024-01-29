@@ -2,10 +2,13 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///eingaben.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = {'main':'sqlite:///eingaben.db'}
+app.config['SQLALCHEMY_DATABASE_URI'] = {'namen':'sqlite:///namen.db'}
+
 db = SQLAlchemy(app)
 
 class Eingabe(db.Model):
+    __bind_key__ = 'main'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     daten = db.Column(db.String(255), nullable=False)
     datum = db.Column(db.String(255), nullable=False)
