@@ -33,6 +33,17 @@ def popup():
 
     return render_template('popup.html', eingabe_daten=eingabe_daten, eingabe_datum=eingabe_datum,)
 
+
+
+@app.route('/loesche_eingaben', methods=['POST'])
+def loesche_eingaben():
+    eingabe_ids = request.form.getlist('eingabe_ids')
+    for eingabe_id in eingabe_ids:
+        eingabe = Eingabe.query.get_or_404(eingabe_id)
+        db.session.delete(eingabe)
+    db.session.commit()
+    return redirect(url_for('startseite'))
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

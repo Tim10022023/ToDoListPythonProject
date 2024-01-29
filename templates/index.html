@@ -10,30 +10,36 @@
   </head>
   <body>
     <h1>To-Do-Liste von Tim, Niklas & Noah</h1>
-    <div>
+    <div style="display: flex; gap: 10px;">
       <button id="NewItem" onclick="oeffnePopup()">New Item</button>
-      <button id="Placeholder1">Placeholder</button>
-      <button id="Placeholder2">Placeholder</button>
-      <button id="Placeholder3">Placeholder</button>
+      <form id="deleteForm" method="POST" action="{{ url_for('loesche_eingaben') }}">
+        <button type="submit">Ausgewählte Löschen</button>      
     </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Aufgabe</th>
-            <th>Datum</th>
-            <th>Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for eingabe in eingaben %}
-          <tr>
-            <td>{{ eingabe.daten }}</td>
-            <td>{{ eingabe.datum }}</td>
-            <td>{{ eingabe.name }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+
+      <form id="deleteForm" method="POST">
+  <table>
+    <thead>
+      <tr>
+        <th>Auswahl</th>
+        <th>Aufgabe</th>
+        <th>Datum</th>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for eingabe in eingaben %}
+      <tr>
+        <td><input type="checkbox" name="eingabe_ids" value="{{ eingabe.id }}"></td>
+        <td>{{ eingabe.daten }}</td>
+        <td>{{ eingabe.datum }}</td>
+        <td>{{ eingabe.name }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+</form>
+
 
     <script>
       window.addEventListener(
