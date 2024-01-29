@@ -16,28 +16,17 @@
       <label for="date">Datum eingeben:</label>
       <input type="date" id="date" name="date" /><br />
 
-      <button id="abbrechen" type="button" onclick="closeWindow()">
+      <label for="name">Name eingeben:</label>
+      <input type="text" id="name" name="name" /><br />
+
+      <button id="abbrechen" type="button" onclick="closeWindow();">
         Abbrechen
       </button>
-      <button id="save" type="button" onclick="speichereDaten()">
-        Speichern
-      </button>
+      <button id="save" type="submit">Speichern</button>
     </form>
 
     <script>
-      function speichereDaten() {
-        var eingabeDaten = document.getElementById("daten").value;
-        var eingabeDatum = document.getElementById("date").value;
 
-        var datenObjekt = {
-          eingabeDaten: eingabeDaten,
-          eingabeDatum: eingabeDatum,
-        };
-
-        window.opener.postMessage(datenObjekt, window.location.origin);
-
-        window.close();
-      }
       function closeWindow() {
         window.close();
       }

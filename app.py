@@ -4,42 +4,49 @@ from flask import redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///eingaben.db'
 db = SQLAlchemy(app)
 
-class Task(db.model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.Text)
-    done = db.Column(db.Boolean, default = False)
+class Eingabe(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    daten = db.Column(db.String(255), nullable=False)
+    datum = db.Column(db.String(255), nullable=False)
+    name = db.Column(db.String(255), nullable=False)
 
-    def __init__(self, content):
-        self.content = content
-        self.done = False
-    
-    def __repr__(self):
-        return "<Content %s>" % self.content
-
-db.create_all()
-
-gespeicherte_daten = []
-gespeichertes_datum = []
-
-@app.route('/') #rendert/ruft startseite auf
+@app.route('/')
 def startseite():
-    gespeicherte_daten = Task.query.all()
-    return render_template('index.html', daten=gespeicherte_daten)
+    eingaben = Eingabe.query.all()
+    return render_template('index.html', eingaben=eingaben)
 
-@app.route('/popup', methods=['GET', 'POST'])
+@app.route('/popup', methods=['POST','GET'])
 def popup():
+    eingabe_daten=[]
+    eingabe_datum=""
+    eingabe_name=""
     if request.method == 'POST':
-        eingabe_daten = request.form['daten']# Extrahiere Daten aus dem Formularfeld 'daten' der POST-Anfrage
-        gespeicherte_daten.append(eingabe_daten)# Füge die empfangenen Daten zur Liste 'gespeicherte_daten' hinzu
-        eingabe_datum = request.form['date']
-        gespeichertes_datum.append(eingabe_datum)
-        return render_template('popup.html', eingabe_daten=eingabe_daten, eingabe_datum=eingabe_datum)# Rendere das HTML-Template 'popup.html' und übergebe 'eingabe_daten'
-    return render_template('popup.html')# Wenn keine POST-Anfrage vorliegt, rendere einfach das HTML-Template 'popup.html'
+        eingabe_daten = request.form["daten"]
+        eingabe_datum = request.form["date"]
+        eingabe_name = request.form["name"]
 
+        neue_eingabe = Eingabe(daten=eingabe_daten, datum=eingabe_datum, name=eingabe_name,)
+        db.session.add(neue_eingabe)
+        db.session.commit()
+        #return jsonify({"success": True})
+
+    return render_template('popup.html', eingabe_daten=eingabe_daten, eingabe_datum=eingabe_datum,)
+
+
+
+@app.route('/loesche_eingaben', methods=['POST'])
+def loesche_eingaben():
+    eingabe_ids = request.form.getlist('eingabe_ids')
+    for eingabe_id in eingabe_ids:
+        eingabe = Eingabe.query.get_or_404(eingabe_id)
+        db.session.delete(eingabe)
+    db.session.commit()
+    return redirect(url_for('startseite'))
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
