@@ -29,7 +29,6 @@ def popup():
         neue_eingabe = Eingabe(daten=eingabe_daten, datum=eingabe_datum, name=eingabe_name,)
         db.session.add(neue_eingabe)
         db.session.commit()
-        #return jsonify({"success": True})
 
     return render_template('popup.html', eingabe_daten=eingabe_daten, eingabe_datum=eingabe_datum,)
 
