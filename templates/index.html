@@ -12,7 +12,7 @@
     <h1>To-Do-Liste von Tim, Niklas & Noah</h1>
     <div style="display: flex; gap: 10px;">
       <button id="NewItem" onclick="oeffnePopup()">New Item</button>
-      <form id="deleteForm" method="POST" action="{{ url_for('loesche_eingaben') }}">
+      <form id="deleteForm" method="POST" action="{{ url_for('delete_task') }}">
         <button type="submit">Ausgewählte Löschen</button>      
     </div>
 
@@ -21,18 +21,20 @@
     <thead>
       <tr>
         <th>Auswahl</th>
-        <th>Aufgabe</th>
-        <th>Datum</th>
-        <th>Name</th>
+        <th>Task</th>
+        <th>Date</th>
+        <th>Person</th>
+        <th>Done</th>
       </tr>
     </thead>
     <tbody>
-      {% for eingabe in eingaben %}
+      {% for task in tasks %}
       <tr>
-        <td><input type="checkbox" name="eingabe_ids" value="{{ eingabe.id }}"></td>
-        <td>{{ eingabe.daten }}</td>
-        <td>{{ eingabe.datum }}</td>
-        <td>{{ eingabe.name }}</td>
+        <td><input type="checkbox" name="task_ids" value="{{ task.id }}"></td>
+        <td>{{ task_content }}</td>
+        <td>{{ task_date }}</td>
+        <td>{{ task_person }}</td>
+        <td>{{ task_done }}</td>
       </tr>
       {% endfor %}
     </tbody>
@@ -45,18 +47,22 @@
       window.addEventListener(
         "message",
         function (event) {
-          var empfangeneDaten = event.data.eingabeDaten;
-          var empfangenesDatum = event.data.eingabeDatum;
-          var empfangenerName = event.data.eingabeName;
+          var receivedContent = event.data.taskContent;
+          var receivedDate = event.data.taskDate;
+          var receivedPerson = event.data.taskPerson;
+          var receivedDone = event.data.taskDone;
           // Hier werden die empfangenen Daten in die Tabelle ein
           var tbody = document.querySelector("table tbody");
           var newRow = tbody.insertRow();
-          var cellDaten = newRow.insertCell(0);
-          var cellDatum = newRow.insertCell(1);
-          var cellName = newRow.insertCell(2);
-          cellDaten.textContent = empfangeneDaten;
-          cellDatum.textContent = empfangenesDatum;
-          cellName.textContent = empfangenerName;
+          var cellContent = newRow.insertCell(0);
+          var cellDate = newRow.insertCell(1);
+          var cellPerson = newRow.insertCell(2);
+          var cellDone = newRow.insertCell(3);
+          cellContent.textContent = receivedContent;
+          cellDate.textContent = receivedDate;
+          cellPerson.textContent = receivedPerson;
+          cellDone.textContent = receivedDone;
+
         },
         false
       );
