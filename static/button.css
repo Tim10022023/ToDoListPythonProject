@@ -127,18 +127,13 @@ body {
       0 0 9px 3px rgba(27, 253, 156, 0.1);
   }
   
-  #cancel:hover {
-    color: #ea00ff;
-    box-shadow: inset 0 0 10px #1bb2fd66,
-      0 0 9px 3px #1bb2fd66;
-  }
-  #delete:hover{
+  #cancel:hover, #delete:hover {
     color: #ea00ff;
     box-shadow: inset 0 0 10px #1bb2fd66,
       0 0 9px 3px #1bb2fd66;
   }
   
-  #cancel:before {
+  #cancel:before, #delete:before {
     content: "";
     position: absolute;
     left: -4em;
@@ -155,6 +150,6 @@ body {
     );
   }
   
-  #cancel:hover:before {
+  #cancel:hover:before, #delete:hover:before {
     transform: translateX(15em);
   }
