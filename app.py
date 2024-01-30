@@ -36,7 +36,7 @@ def popup():
         db.session.add(new_task)
         db.session.commit()
 
-    return render_template('popup.html', task_content=task_content, task_date=task_date,task_person=task_person) #task_done=task_done)
+    return render_template('popup.html', task_content=task_content, task_date=task_date,task_person=task_person, task_done=task_done)
 
 
 
