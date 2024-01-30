@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Popup-Seite</title>
     <link rel="stylesheet" href="../static/button.css" />
 </head>
 <body>
+  
     <h2>Popup-Seite</h2>
 
     <form method="POST">
@@ -23,6 +25,20 @@
 
         <button id="cancel" type="button" onclick="closeWindow();">Cancel</button>
         <button id="save" type="submit">Save</button>
+
+
+
+
+
+
+
+
+
+        <form method="POST">
+          <!-- CSRF-Token als verstecktes Feld einfügen -->
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      </form>
+      
     </form>
 
     <script>
