@@ -1,58 +1,84 @@
 <!DOCTYPE html>
 <html lang="de">
   <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To-Do Liste</title>
     <link rel="stylesheet" href="../static/style.css" />
-    <link rel="stylesheet" href="../static/button_index.css" />
+    <link rel="stylesheet" href="../static/button.css" />
   </head>
   <body>
     <h1>To-Do-Liste von Tim, Niklas & Noah</h1>
-    <div>
+    <div style="display: flex; gap: 10px">
       <button id="NewItem" onclick="oeffnePopup()">New Item</button>
-      <button id="Placeholder">Placeholder</button>
-      <button id="Placeholder">Placeholder</button>
-      <button id="Placeholder">Placeholder</button>
+      <!-- Stellen Sie sicher, dass das action-Attribut auf eine gültige Route zeigt -->
+      <button id="delete" form="deleteForm" type="submit">&#128465;</button>
     </div>
-    <table id="aufgaben-tabelle">
-      <thead>
-        <tr>
-          <th>Empfangene Daten</th>
-        </tr>
-      </thead>
-      <tbody id="aufgabe">
-          <!--hier erscheint die Werte-->
-      </tbody>
-    </table>
-
-    <table id="datum-tabelle">
+    
+    <form id="deleteForm" method="post" action="{{ url_for('delete_task') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <table>
         <thead>
           <tr>
-            <th>Datum</th>
+            <th>Auswahl</th>
+            <th>Task</th>
+            <th>Date</th>
+            <th>Person</th>
+            <th>Done</th>
           </tr>
         </thead>
-        <tbody id="datum">
-            <!--hier erscheint das Datum-->
+        <tbody>
+          {% for task in tasks %}
+          <tr>
+            <td>
+              <input type="checkbox" name="task_ids" value="{{ task.id }}" />
+            </td>
+            <td>{{ task.content }}</td>
+            <td>{{ task.date }}</td>
+            <td>{{ task.person }}</td>
+            <td>
+              <input
+                type="checkbox"
+                name="done_{{ task.id }}"
+                data-task-id="{{ task.id }}"
+                onchange="updateTaskStatus(this)"
+                {%
+                if
+                task.done
+                %}
+                checked
+                {%
+                endif
+                %}
+              />
+            </td>
+          </tr>
+          {% endfor %}
         </tbody>
       </table>
-
+    </form>
 
     <script>
-      window.addEventListener(
-        "message",
-        function (event) {
-          var empfangeneDaten = event.data.EingabeDaten;
-          var empfangenesDatum = event.data.eingabeDatum;
-          // Hier werden die empfangenen Daten in die Tabelle ein
-          var zielElementDaten = document.querySelector("#aufgabe");
-          zielElementDaten.textContent = empfangeneDaten;
+      function updateTaskStatus(checkbox) {
+        const taskId = checkbox.getAttribute("data-task-id");
+        const doneStatus = checkbox.checked ? 1 : 0;
+        const csrfToken = document
+          .querySelector('meta[name="csrf-token"]')
+          .getAttribute("content");
 
-          var ZielElementDatum = document.querySelector("#datum");
-          ZielElementDatum.textContent = empfangenesDatum;
-        },
-        false
-      );
+        fetch(`/update_task_status/${taskId}`, {
+          method: "POST",
+          body: JSON.stringify({ done: doneStatus }),
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfToken, // CSRF-Token aus dem Meta-Tag verwenden
+          },
+        }).then((response) => {
+          // Verarbeiten Sie die Antwort
+        });
+      }
+
       function oeffnePopup() {
         var popup = window.open("/popup", "_blank", "width=400,height=400");
       }

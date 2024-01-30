@@ -1,46 +1,47 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
+<head>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Popup-Seite</title>
-    <link rel="stylesheet" href="../static/style_popup.css" />
-  </head>
-  <body>
+    <link rel="stylesheet" href="../static/button.css" />
+</head>
+<body>
+  
     <h2>Popup-Seite</h2>
 
-    <form method="POST">
-      <label for="daten">Daten eingeben:</label>
-      <input type="text" id="daten" name="daten" required /><br />
+    <form method="POST" action="{{ url_for('popup') }}">
+        <label for="content">Enter task:</label>
+        <input type="text" id="content" name="content" required /><br />
 
-      <label for="date">Datum eingeben:</label>
-      <input type="date" id="date" name="date" /><br />
+        <label for="date">Enter date:</label>
+        <input type="date" id="date" name="date" /><br />
 
-      <button id="abbrechen" type="button" onclick="closeWindow()">
-        Abbrechen
-      </button>
-      <button id="save" type="button" onclick="speichereDaten()">
-        Speichern
-      </button>
+        <label for="person">Enter person:</label>
+        <input type="text" id="person" name="person" /><br />
+
+        <button id="cancel" type="button" onclick="closeWindow();">Cancel</button>
+
+        <button id="save" type="submit">Save</button>
+
+
+
+
+
+
+
+
+
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    
+      
     </form>
 
     <script>
-      function speichereDaten() {
-        var eingabeDaten = document.getElementById("daten").value;
-        var eingabeDatum = document.getElementById("date").value;
-
-        var datenObjekt = {
-          eingabeDaten: eingabeDaten,
-          eingabeDatum: eingabeDatum,
-        };
-
-        window.opener.postMessage(datenObjekt, window.location.origin);
-
-        window.close();
-      }
-      function closeWindow() {
-        window.close();
-      }
+        function closeWindow() {
+            window.close();
+        }
     </script>
-  </body>
+</body>
 </html>
