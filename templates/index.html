@@ -13,11 +13,13 @@
     <div style="display: flex; gap: 10px">
       <button id="NewItem" onclick="oeffnePopup()">New Item</button>
       <!-- Stellen Sie sicher, dass das action-Attribut auf eine gültige Route zeigt -->
-      <button id="delete" form="deleteForm" type="submit"><span class="large">&#x1F5D1;</span></button>
+      <button id="delete" form="deleteForm" type="submit">
+        <span class="large">&#x1F5D1;</span>
+      </button>
     </div>
-    
+
     <form id="deleteForm" method="post" action="{{ url_for('delete_task') }}">
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
       <table>
         <thead>
           <tr>
