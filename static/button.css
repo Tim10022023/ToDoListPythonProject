@@ -49,10 +49,6 @@
     transform: translateX(15em);
   }
 
-body {
-    background: lightblue;
-  }
-
   #save{
     --green: #11c900;
     font-size: 15px;
@@ -153,3 +149,4 @@ body {
   #cancel:hover:before, #delete:hover:before {
     transform: translateX(15em);
   }
+  
