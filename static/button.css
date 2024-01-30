@@ -1,4 +1,4 @@
-button {
+#NewItem {
     --blue: #0959a0;
     font-size: 15px;
     padding: 0.7em 2.7em;
@@ -22,13 +22,13 @@ button {
       0 0 9px 3px rgba(27, 253, 156, 0.1);
   }
   
-  button:hover {
+  #NewItem:hover {
     color: #ea00ff;
     box-shadow: inset 0 0 10px #1bb2fd66,
       0 0 9px 3px #1bb2fd66;
   }
   
-  button:before {
+  #NewItem:before {
     content: "";
     position: absolute;
     left: -4em;
@@ -45,7 +45,7 @@ button {
     );
   }
   
-  button:hover:before {
+  #NewItem:hover:before {
     transform: translateX(15em);
   }
 
