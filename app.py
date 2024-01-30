@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf import CSRFProtect
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///eingaben.db'
+app.config['SECRET_KEY'] = 'IhrGeheimesSchlüssel'
+csrf = CSRFProtect(app)
 
 db = SQLAlchemy(app)
 
@@ -16,7 +19,7 @@ class Task(db.Model):
 @app.route('/')
 def homepage():
     tasks = Task.query.all()
-    return render_template('index.html', eingaben=tasks)
+    return render_template('index.html', tasks=tasks)
 
 @app.route('/popup', methods=['POST','GET'])
 def popup():
@@ -28,13 +31,12 @@ def popup():
         task_content = request.form["content"]
         task_date = request.form["date"]
         task_person = request.form["person"]
-        task_done = request.form["done"]
-
+        task_done = 'done' in request.form
         new_task = Task(content=task_content, date=task_date, person=task_person, done=task_done)
         db.session.add(new_task)
         db.session.commit()
 
-    return render_template('popup.html', task_content=task_content, task_date=task_date,task_person=task_person, task_done=task_done)
+    return render_template('popup.html', task_content=task_content, task_date=task_date,task_person=task_person) #task_done=task_done)
 
 
 
@@ -45,10 +47,19 @@ def delete_task():
         task = Task.query.get_or_404(task_id)
         db.session.delete(task)
     db.session.commit()
-    return redirect(url_for('startseite'))
+    return redirect(url_for('homepage'))
+
+@app.route('/update_task_status/<int:task_id>', methods=['POST'])
+def update_task_status(task_id):
+    data = request.get_json()
+    task = Task.query.get_or_404(task_id)
+    task.done = data['done']
+    db.session.commit()
+    return jsonify({'success': True}), 200
+
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000) #wird benötigt damit man vom lokalen Netz zugreifen kann
+    #app.run(host='0.0.0.0', port=5000) #wird benötigt damit man vom lokalen Netz zugreifen kann
     with app.app_context():
         db.create_all()
     app.run(debug=True)

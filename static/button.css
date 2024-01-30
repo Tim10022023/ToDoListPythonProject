@@ -1,4 +1,4 @@
-#NewItem {
+button {
     --blue: #0959a0;
     font-size: 15px;
     padding: 0.7em 2.7em;
@@ -22,13 +22,13 @@
       0 0 9px 3px rgba(27, 253, 156, 0.1);
   }
   
-  #NewItem:hover {
+  button:hover {
     color: #ea00ff;
     box-shadow: inset 0 0 10px #1bb2fd66,
       0 0 9px 3px #1bb2fd66;
   }
   
-  #NewItem:before {
+  button:before {
     content: "";
     position: absolute;
     left: -4em;
@@ -45,7 +45,7 @@
     );
   }
   
-  #NewItem:hover:before {
+  button:hover:before {
     transform: translateX(15em);
   }
 
@@ -103,7 +103,7 @@ body {
   #save:hover:before {
     transform: translateX(15em);
   }
-#abbrechen, #delete{
+#cancel, #delete{
     --rot: #c90000;
     font-size: 15px;
     padding: 0.7em 2.7em;
@@ -127,13 +127,13 @@ body {
       0 0 9px 3px rgba(27, 253, 156, 0.1);
   }
   
-  #abbrechen:hover {
+  #cancel:hover {
     color: #ea00ff;
     box-shadow: inset 0 0 10px #1bb2fd66,
       0 0 9px 3px #1bb2fd66;
   }
   
-  #abbrechen:before {
+  #cancel:before {
     content: "";
     position: absolute;
     left: -4em;
@@ -150,6 +150,6 @@ body {
     );
   }
   
-  #abbrechen:hover:before {
+  #cancel:hover:before {
     transform: translateX(15em);
   }
