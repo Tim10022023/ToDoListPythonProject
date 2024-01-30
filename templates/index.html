@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
   <head>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To-Do Liste</title>
@@ -15,7 +15,9 @@
       <!-- Stellen Sie sicher, dass das action-Attribut auf eine gültige Route zeigt -->
       <button id="delete" form="deleteForm" type="submit">&#128465;</button>
     </div>
+    
     <form id="deleteForm" method="post" action="{{ url_for('delete_task') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <table>
         <thead>
           <tr>
@@ -59,21 +61,23 @@
 
     <script>
       function updateTaskStatus(checkbox) {
-  const taskId = checkbox.getAttribute('data-task-id');
-  const doneStatus = checkbox.checked ? 1 : 0;
-  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        const taskId = checkbox.getAttribute("data-task-id");
+        const doneStatus = checkbox.checked ? 1 : 0;
+        const csrfToken = document
+          .querySelector('meta[name="csrf-token"]')
+          .getAttribute("content");
 
-  fetch(`/update_task_status/${taskId}`, {
-    method: 'POST',
-    body: JSON.stringify({ done: doneStatus }),
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrfToken  // CSRF-Token aus dem Meta-Tag verwenden
-    }
-  }).then(response => {
-    // Verarbeiten Sie die Antwort
-  });
-}
+        fetch(`/update_task_status/${taskId}`, {
+          method: "POST",
+          body: JSON.stringify({ done: doneStatus }),
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfToken, // CSRF-Token aus dem Meta-Tag verwenden
+          },
+        }).then((response) => {
+          // Verarbeiten Sie die Antwort
+        });
+      }
 
       function oeffnePopup() {
         var popup = window.open("/popup", "_blank", "width=400,height=400");

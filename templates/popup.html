@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Popup-Seite</title>
     <link rel="stylesheet" href="../static/button.css" />
 </head>
 <body>
+  
     <h2>Popup-Seite</h2>
 
-    <form method="POST">
+    <form method="POST" action="{{ url_for('popup') }}">
         <label for="content">Enter task:</label>
         <input type="text" id="content" name="content" required /><br />
 
@@ -19,10 +21,21 @@
         <label for="person">Enter person:</label>
         <input type="text" id="person" name="person" /><br />
 
-        <!-- Wenn Sie das done-Feld wieder hinzufügen möchten, fügen Sie es hier ein. -->
-
         <button id="cancel" type="button" onclick="closeWindow();">Cancel</button>
+
         <button id="save" type="submit">Save</button>
+
+
+
+
+
+
+
+
+
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    
+      
     </form>
 
     <script>
