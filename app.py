@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf import CSRFProtect
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///eingaben.db'
+app.config['SECRET_KEY'] = 'IhrGeheimesSchlüssel'
+csrf = CSRFProtect(app)
 
 db = SQLAlchemy(app)
 
@@ -11,7 +14,7 @@ class Task(db.Model):
     content = db.Column(db.String(255), nullable=False)
     date = db.Column(db.String(255), nullable=False)
     person = db.Column(db.String(255), nullable=False)
-    #done = db.Column(db.Boolean, default=False)
+    done = db.Column(db.Boolean, default=False)
 
 @app.route('/')
 def homepage():
@@ -23,14 +26,13 @@ def popup():
     task_content=[]
     task_date=""
     task_person=""
-    #task_done=False
+    task_done=False
     if request.method == 'POST':
         task_content = request.form["content"]
         task_date = request.form["date"]
         task_person = request.form["person"]
-        # task_done = request.form["done"]
-
-        new_task = Task(content=task_content, date=task_date, person=task_person) #done=task_done)
+        task_done = 'done' in request.form
+        new_task = Task(content=task_content, date=task_date, person=task_person, done=task_done)
         db.session.add(new_task)
         db.session.commit()
 
@@ -46,6 +48,15 @@ def delete_task():
         db.session.delete(task)
     db.session.commit()
     return redirect(url_for('homepage'))
+
+@app.route('/update_task_status/<int:task_id>', methods=['POST'])
+def update_task_status(task_id):
+    data = request.get_json()
+    task = Task.query.get_or_404(task_id)
+    task.done = data['done']
+    db.session.commit()
+    return jsonify({'success': True}), 200
+
 
 if __name__ == '__main__':
     #app.run(host='0.0.0.0', port=5000) #wird benötigt damit man vom lokalen Netz zugreifen kann
