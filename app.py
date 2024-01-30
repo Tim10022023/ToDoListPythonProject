@@ -24,8 +24,8 @@ def homepage():
 @app.route('/popup', methods=['POST','GET'])
 def popup():
     task_content=[]
-    task_date=""
-    task_person=""
+    task_date=[]
+    task_person=[]
     task_done=False
     if request.method == 'POST':
         task_content = request.form["content"]
