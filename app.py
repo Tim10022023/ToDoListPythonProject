@@ -35,9 +35,8 @@ def popup():
         new_task = Task(content=task_content, date=task_date, person=task_person, done=task_done)
         db.session.add(new_task)
         db.session.commit()
-
-    return render_template('popup.html', task_content=task_content, task_date=task_date,task_person=task_person, task_done=task_done)
-
+        return "<script>window.opener.location.reload(); window.close();</script>"
+    return render_template('popup.html')
 
 
 @app.route('/delete_task', methods=['POST'])
