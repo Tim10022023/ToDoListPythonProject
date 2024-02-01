@@ -78,10 +78,9 @@
           body: JSON.stringify({ done: doneStatus }),
           headers: {
             "Content-Type": "application/json",
-            "X-CSRFToken": csrfToken, // CSRF-Token aus dem Meta-Tag verwenden
+            "X-CSRFToken": csrfToken,
           },
         }).then((response) => {
-          // Verarbeiten Sie die Antwort
         });
       }
 
