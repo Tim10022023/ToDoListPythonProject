@@ -1,5 +1,5 @@
 body {
-  background: lightblue;
+  background: #add8e6;
 }
 
 h1 {
@@ -8,4 +8,7 @@ h1 {
 table{
   width: 65%;
   text-align: center;
+}
+.large{
+  font-size: 25px;
 }
