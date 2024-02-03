@@ -49,35 +49,15 @@
       rgba(27, 253, 156, 0.1) 100%
     );
     color: var(--green);
-    box-shadow: inset 0 0 10px #1bb2fd66,
+    box-shadow: inset 0 0 10px #1fc01170,
       0 0 9px 3px rgba(27, 253, 156, 0.1);
   }
   
   #save:hover {
-    box-shadow: inset 0 0 10px #1bb2fd66,
-      0 0 9px 3px #1bb2fd66;
+    box-shadow: inset 0 0 10px #1fc01170,
+      0 0 9px 3px #1fc01170;
   }
   
-  #save:before {
-    content: "";
-    position: absolute;
-    left: -4em;
-    width: 4em;
-    height: 100%;
-    top: 0;
-    transition: transform 0.4s ease-in-out;
-    background: linear-gradient(
-      to right,
-      transparent 1%,
-      rgba(27, 253, 156, 0.1) 40%,
-      rgba(27, 253, 156, 0.1) 60%,
-      transparent 100%
-    );
-  }
-  
-  #save:hover:before {
-    transform: translateX(15em);
-  }
 #cancel, #delete{
     --rot: #c90000;
     font-size: 15px;
@@ -98,12 +78,12 @@
       rgba(27, 253, 156, 0.1) 100%
     );
     color: var(--rot);
-    box-shadow: inset 0 0 9px #c900005d,
+    box-shadow: inset 0 0 10px #f70b0b54,
       0 0 9px 3px rgba(27, 253, 156, 0.1);
   }
   
   #cancel:hover, #delete:hover {
-    box-shadow: inset 0 0 10px #c900005d,
-      0 0 9px 3px #c900005d;
+    box-shadow: inset 0 0 10px #f70b0b54,
+      0 0 9px 3px #f70b0b54;
   }
   
