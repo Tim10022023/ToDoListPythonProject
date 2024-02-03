@@ -12,3 +12,9 @@ table{
 .large{
   font-size: 25px;
 }
+
+.task-done {
+  text-decoration: line-through; 
+  color: #2dc518; 
+}
+
