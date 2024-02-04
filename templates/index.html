@@ -28,6 +28,32 @@
     </div>
   </div>
 
+  <form method="POST" action="/">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <button type="submit">Add Person</button>
+</form>
+<table id="person-table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for person in persons %}
+        <tr id="person-{{ person.id }}">
+            <td>{{ person.id }}</td>
+            <td>{{ person.name }}</td>
+            <td>
+                <button class="delete-btn" data-id="{{ person.id }}">Delete</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
   <form id="deleteForm" method="post" action="{{ url_for('delete_task') }}">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
     <table>
@@ -60,6 +86,21 @@
   </form>
 
   <script>
+    $(document).ready(function() {
+            $('.delete-btn').on('click', function() {
+                var personId = $(this).data('id');
+                $.ajax({
+                    url: '/delete',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({'id': personId}),
+                    success: function(response) {
+                        $('#person-' + personId).remove();
+                        alert(response.message);
+                    }
+                });
+            });
+        });
     function updateTaskStatus(checkbox) {
       const taskId = checkbox.getAttribute("data-task-id");
       const doneStatus = checkbox.checked ? 1 : 0;
