@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/style.css" />
+    <link rel="stylesheet" href="../static/login.css">
+    <link rel="stylesheet" href="../static/button.css">
+    <title>Log-In</title>
+  </head>
+  <body>
+    <div id="login-register">
+      <div id="login-page">
+        <h2>Anmelden</h2>
+        <form action="{{ url_for('login') }}" method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <input
+            type="text"
+            name="username"
+            placeholder="Benutzername"
+            required
+          />
+          <br />
+          <input
+            type="password"
+            name="password"
+            placeholder="Passwort"
+            required
+          /><br />
+          <button id="Anmelden" type="submit">Anmelden</button>
+        </form>
+      </div>
+
+      <div id="register-page">
+        <h2>Registrieren</h2>
+        <form method="post" action="/register">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+          <input
+            type="text"
+            name="username"
+            placeholder="Benutzername"
+            required
+          /><br>
+          <input
+            type="password"
+            name="password"
+            placeholder="Passwort"
+            required
+          /> <br>
+          <button id="register" type="submit">Registrieren</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
