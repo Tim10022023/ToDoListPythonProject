@@ -1,4 +1,4 @@
-#NewItem, #Anmelden, #register, #logout {
+#NewItem, #Anmelden, #register, #logout, #read {
     --blue: #0959a0;
     font-size: 15px;
     padding: 0.7em 2.7em;
@@ -22,7 +22,7 @@
       0 0 9px 3px rgba(27, 253, 156, 0.1);
   }
   
-  #NewItem:hover, #Anmelden:hover, #register:hover, #logout:hover {
+  #NewItem:hover, #Anmelden:hover, #register:hover, #logout:hover, #read:hover {
     box-shadow: inset 0 0 10px #1bb2fd66,
       0 0 9px 3px #1bb2fd66;
   }

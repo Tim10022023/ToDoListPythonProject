@@ -27,7 +27,7 @@
       <input type="color" name="bg_color" id="bg_color" oninput="updateBackground()">
     </div> -->
   </div>
-
+  <button id="read"onclick="readSelectedTasks()">Aufgabe vorlesen</button>
 
   <!-- <form method="POST" action="/">
     <label for="name">Name:</label>
@@ -138,6 +138,40 @@
       var selectedColor = document.getElementById('bg_color').value;
       document.body.style.backgroundColor = selectedColor;
     }
+    //Durchlaufe alle Checkboxen
+    function readSelectedTasks() {
+      var selectedTasks = [];
+      var checkboxes = document.getElementById('{{ task.id }}');
+      for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+          // Füge den Text der ausgewählten Checkboxen zur Liste hinzu
+          selectedTasks.push(checkboxes[i].value);
+        }
+      }
+      
+    // Überprüfen, ob mindestens eine Checkbox ausgewählt wurde
+    if (selectedTasks.length > 0) {
+        // AJAX-Anfrage an den Flask-Server senden
+        fetch('http://localhost:5000/text_to_speech', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ tasks: selectedTasks }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Response:', data);
+            alert('Ausgewählte Aufgaben erfolgreich vorgelesen');
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('Fehler beim Vorlesen der ausgewählten Aufgaben');
+        });
+    } else {
+        alert('Bitte wähle mindestens eine Aufgabe aus, bevor du sie vorlesen lässt.');
+    }
+}
   </script>
 </body>
 

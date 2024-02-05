@@ -3,6 +3,7 @@ from flask_wtf import CSRFProtect
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, Task, User
+import pyttsx3
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///eingaben.db'
@@ -95,6 +96,22 @@ def update_task_status(task_id):
     db.session.commit()
     return jsonify({'success': True}), 200
 
+
+def read_task(tasks):
+    engine = pyttsx3.init()
+    for task in tasks:
+        engine.say(tasks)
+    engine.runAndWait()
+
+
+@app.route('/text_to_speech', methods=['POST'])
+def text_to_speech():
+    data = request.get_json()
+    tasks = data.get['tasks', []]
+
+    read_task(tasks)
+
+    return jsonify({'message': 'Text erfolgreich vorgelesen'})
 
 if __name__ == '__main__':
     #app.run(host='0.0.0.0', port=5000) #wird benötigt damit man vom lokalen Netz zugreifen kann
