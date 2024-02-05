@@ -27,9 +27,32 @@
       <input type="color" name="bg_color" id="bg_color" oninput="updateBackground()">
     </div>
   </div>
+  <h2>Registrierte Benutzer</h2>
+  <form id="deleteUserForm" method="post" action="{{ url_for('delete_user') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <button type="submit">Ausgewählte Benutzer löschen</button>
+    <div class="user-list-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Auswahl</th>
+          <th>Benutzername</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>
+            <input type="checkbox" name="user_ids" value="{{ user.id }}" />
+          </td>
+          <td>{{ user.username }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  </form> 
 
-
-</form>
 
   <form id="deleteForm" method="post" action="{{ url_for('delete_task') }}">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
@@ -63,21 +86,6 @@
   </form>
 
   <script>
-    $(document).ready(function() {
-            $('.delete-btn').on('click', function() {
-                var personId = $(this).data('id');
-                $.ajax({
-                    url: '/delete',
-                    method: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({'id': personId}),
-                    success: function(response) {
-                        $('#person-' + personId).remove();
-                        alert(response.message);
-                    }
-                });
-            });
-        });
     function updateTaskStatus(checkbox) {
       const taskId = checkbox.getAttribute("data-task-id");
       const doneStatus = checkbox.checked ? 1 : 0;

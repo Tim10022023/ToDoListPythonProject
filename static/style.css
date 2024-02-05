@@ -18,3 +18,10 @@ table{
   color: #2dc518; 
 }
 
+.user-list-table{
+  width:20%;
+  display:flex;
+  justify-content: space-around;
+  border: 1px solid black;
+  margin: 10px;
+}

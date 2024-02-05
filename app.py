@@ -58,7 +58,8 @@ def register():
 @login_required
 def homepage():
     tasks = Task.query.filter_by(user_id=current_user.id).all()
-    return render_template('index.html', tasks=tasks)
+    users = User.query.all()
+    return render_template('index.html', tasks=tasks, users=users)
 
 @app.route('/popup', methods=['POST','GET'])
 def popup():
@@ -84,6 +85,15 @@ def delete_task():
     for task_id in task_ids:
         task = Task.query.get_or_404(task_id)
         db.session.delete(task)
+    db.session.commit()
+    return redirect(url_for('homepage'))
+
+@app.route('/delete_user', methods=['POST'])
+def delete_user():
+    user_ids = request.form.getlist('user_ids')
+    for user_id in user_ids:
+        user = User.query.get_or_404(user_id)
+        db.session.delete(user)
     db.session.commit()
     return redirect(url_for('homepage'))
 
