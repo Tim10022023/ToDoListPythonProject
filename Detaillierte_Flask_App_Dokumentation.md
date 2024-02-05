@@ -1,5 +1,5 @@
 
-# Flask Webanwendung Dokumentation
+# Flask Webanwendung Dokumentation (from ChatGPT)
 
 ## Übersicht
 Diese Dokumentation beschreibt die Struktur und Funktionsweise einer Flask-Webanwendung, die Benutzerauthentifizierung, Aufgabenverwaltung und Datenpersistenz mittels SQLite umfasst.
