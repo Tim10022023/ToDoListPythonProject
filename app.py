@@ -58,7 +58,7 @@ def register():
 @app.route('/')
 @login_required
 def homepage():
-    tasks = Task.query.filter_by(user_id=current_user.id).all()
+    tasks = Task.query.filter(Task.user_id == current_user.id)
     return render_template('index.html', tasks=tasks)
 
 @app.route('/popup', methods=['POST','GET'])
@@ -100,21 +100,20 @@ def update_task_status(task_id):
 def read_task(tasks):
     engine = pyttsx3.init()
     for task in tasks:
-        engine.say(tasks)
+        engine.say(task)
     engine.runAndWait()
-
 
 @app.route('/text_to_speech', methods=['POST'])
 def text_to_speech():
     data = request.get_json()
-    tasks = data.get['tasks', []]
+    tasks = data.get('tasks', [])
 
     read_task(tasks)
 
     return jsonify({'message': 'Text erfolgreich vorgelesen'})
 
 if __name__ == '__main__':
-    #app.run(host='0.0.0.0', port=5000) #wird benötigt damit man vom lokalen Netz zugreifen kann
+    #app.run(host='0.0.0.0', port=5501) #wird benötigt damit man vom lokalen Netz zugreifen kann
     with app.app_context():
         db.create_all()
     app.run(debug=True)

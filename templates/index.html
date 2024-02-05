@@ -22,12 +22,9 @@
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <button id="logout"> <img src="../static/Bilder/ausloggen.png" alt="logout" height="20"  width="20"> </button>
     </form>
-    <!-- <div>
-      <label for="bg_color">Change Color</label><br>
-      <input type="color" name="bg_color" id="bg_color" oninput="updateBackground()">
-    </div> -->
+      <button id="read"onclick="readSelectedTasks()">Aufgabe vorlesen</button>
   </div>
-  <button id="read"onclick="readSelectedTasks()">Aufgabe vorlesen</button>
+  
 
   <!-- <form method="POST" action="/">
     <label for="name">Name:</label>
@@ -72,7 +69,7 @@
         {% for task in tasks %}
         <tr class="{{ 'task-done' if task.done else '' }}">
           <td>
-            <input type="checkbox" name="task_ids" value="{{ task.id }}" />
+            <input type="checkbox" class="task-checkbox" name="task_ids" value="{{ task.id }}" />
           </td>
           <td>{{ task.content }}</td>
           <td>{{ task.date }}</td>
@@ -141,7 +138,7 @@
     //Durchlaufe alle Checkboxen
     function readSelectedTasks() {
       var selectedTasks = [];
-      var checkboxes = document.getElementById('{{ task.id }}');
+      var checkboxes = document.querySelectorAll('.task-checkbox');
       for (var i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
           // Füge den Text der ausgewählten Checkboxen zur Liste hinzu
