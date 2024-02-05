@@ -18,6 +18,12 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(200), nullable=False)
     tasks = db.relationship('Task', backref='user')
 
+class Person(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+
+    def __repr__(self):
+        return f'<Person {self.name}>'
     
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
