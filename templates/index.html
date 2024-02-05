@@ -1,35 +1,40 @@
 <!DOCTYPE html>
 <html lang="de">
+  <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do Liste</title>
+    <link rel="stylesheet" href="../static/style.css" />
+    <link rel="stylesheet" href="../static/button.css" />
+    <link rel="favicon" href="../static/Bilder/Favicon.png" type="image/png" />
+  </head>
 
-<head>
-  <meta name="csrf-token" content="{{ csrf_token() }}" />
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>To-Do Liste</title>
-  <link rel="stylesheet" href="../static/style.css" />
-  <link rel="stylesheet" href="../static/button.css" />
-  <link rel="favicon" href="../static/Bilder/Favicon.png" type="image/png">
-</head>
-
-<body>
-  <h1>To-Do-Liste von Tim, Niklas & Noah</h1>
-  <div style="display: flex; gap: 10px">
-    <button id="NewItem" onclick="oeffnePopup()">New Item</button>
-    <button id="delete" form="deleteForm" type="submit">
-      <span class="large">&#x1F5D1;</span>
-    </button>
-    <form method="post" action="{{ url_for('logout') }}">
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <button id="logout"> <img src="../static/Bilder/ausloggen.png" alt="logout" height="20"  width="20"> </button>
-    </form>
-    <!-- <div>
+  <body>
+    <h1>To-Do-Liste von Tim, Niklas & Noah</h1>
+    <div style="display: flex; gap: 10px">
+      <button id="NewItem" onclick="oeffnePopup()">New Item</button>
+      <button id="delete" form="deleteForm" type="submit">
+        <span class="large">&#x1F5D1;</span>
+      </button>
+      <form method="post" action="{{ url_for('logout') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <button id="logout">
+          <img
+            src="../static/Bilder/ausloggen.png"
+            alt="logout"
+            height="20"
+            width="20"
+          />
+        </button>
+      </form>
+      <!-- <div>
       <label for="bg_color">Change Color</label><br>
       <input type="color" name="bg_color" id="bg_color" oninput="updateBackground()">
     </div> -->
-  </div>
+    </div>
 
-
-  <!-- <form method="POST" action="/">
+    <!-- <form method="POST" action="/">
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" required>
     <button type="submit">Add Person</button>
@@ -56,89 +61,104 @@
   </tbody>
 </table> -->
 
-  <form id="deleteForm" method="post" action="{{ url_for('delete_task') }}">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-    <table>
-      <thead>
-        <tr>
-          <th>Auswahl</th>
-          <th>Task</th>
-          <th>Date</th>
-          <th>Person</th>
-          <th>Done</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for task in tasks %}
-        <tr class="{{ 'task-done' if task.done else '' }}">
-          <td>
-            <input type="checkbox" name="task_ids" value="{{ task.id }}" />
-          </td>
-          <td>{{ task.content }}</td>
-          <td>{{ task.date }}</td>
-          <td>{{ task.person }}</td>
-          <td>
-            <input type="checkbox" name="done_{{ task.id }}" data-task-id="{{ task.id }}"
-              onchange="updateTaskStatus(this)" {% if task.done %} checked {% endif %} />
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </form>
+    <form id="deleteForm" method="post" action="{{ url_for('delete_task') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+      <table>
+        <thead>
+          <tr>
+            <th>Auswahl</th>
+            <th>Task</th>
+            <th>Date</th>
+            <th>Created by</th>
+            <th>Done</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for task in tasks %}
+          <tr
+            class="{{ 'task-done' if task.done else '' }}"
+            style="{{ 'background-color: #0088ff;' if task.assigned_by_id and task.assigned_by_id != current_user.id else '' }}"
+          >
+            <td>
+              <input type="checkbox" name="task_ids" value="{{ task.id }}" />
+            </td>
+            <td>{{ task.content }}</td>
+            <td>{{ task.date }}</td>
+            <td>
+              {{ task.assigned_by.username if task.assigned_by else 'N/A' }}
+            </td>
+            <td>
+              <input
+                type="checkbox"
+                name="done_{{ task.id }}"
+                data-task-id="{{ task.id }}"
+                onchange="updateTaskStatus(this)"
+                {%
+                if
+                task.done
+                %}
+                checked
+                {%
+                endif
+                %}
+              />
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </form>
 
-  <script>
-    $(document).ready(function() {
-            $('.delete-btn').on('click', function() {
-                var personId = $(this).data('id');
-                $.ajax({
-                    url: '/delete',
-                    method: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({'id': personId}),
-                    success: function(response) {
-                        $('#person-' + personId).remove();
-                        alert(response.message);
-                    }
-                });
-            });
+    <script>
+      $(document).ready(function () {
+        $(".delete-btn").on("click", function () {
+          var personId = $(this).data("id");
+          $.ajax({
+            url: "/delete",
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify({ id: personId }),
+            success: function (response) {
+              $("#person-" + personId).remove();
+              alert(response.message);
+            },
+          });
         });
-    function updateTaskStatus(checkbox) {
-      const taskId = checkbox.getAttribute("data-task-id");
-      const doneStatus = checkbox.checked ? 1 : 0;
-      const csrfToken = document
-        .querySelector('meta[name="csrf-token"]')
-        .getAttribute("content");
+      });
 
-      if (checkbox.name.startsWith("done_")) {
-        var row = checkbox.closest('tr');
-        if (checkbox.checked) {
-          row.classList.add('task-done');
-        } else {
-          row.classList.remove('task-done');
-        }
-      }
-      fetch(`/update_task_status/${taskId}`, {
+      function updateTaskStatus(checkbox) {
+    const taskId = checkbox.getAttribute("data-task-id");
+    const doneStatus = checkbox.checked ? 1 : 0;
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+
+    var row = checkbox.closest('tr');
+
+    if (checkbox.checked) {
+        row.classList.add('task-done');
+    } else {
+        row.classList.remove('task-done');
+    }
+
+    fetch(`/update_task_status/${taskId}`, {
         method: "POST",
         body: JSON.stringify({ done: doneStatus }),
         headers: {
-          "Content-Type": "application/json",
-          "X-CSRFToken": csrfToken,
+            "Content-Type": "application/json",
+            "X-CSRFToken": csrfToken,
         },
-      }).then((response) => {
-      });
-    }
-
-    function oeffnePopup() {
-      var popup = window.open("/popup", "_blank", "width=400,height=400");
-    }
+    }).then((response) => {
+    });
+}
 
 
-    function updateBackground() {
-      var selectedColor = document.getElementById('bg_color').value;
-      document.body.style.backgroundColor = selectedColor;
-    }
-  </script>
-</body>
+      function oeffnePopup() {
+        var popup = window.open("/popup", "_blank", "width=400,height=400");
+      }
 
+      function updateBackground() {
+        var selectedColor = document.getElementById("bg_color").value;
+        document.body.style.backgroundColor = selectedColor;
+      }
+    </script>
+  </body>
 </html>

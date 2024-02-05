@@ -16,5 +16,7 @@ table{
 .task-done {
   text-decoration: line-through; 
   color: #2dc518; 
+  background-color: transparent !important;
 }
+
 
