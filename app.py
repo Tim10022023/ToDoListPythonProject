@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify, f
 from flask_wtf import CSRFProtect
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash
-from models import db, Task, User, Person
+from models import db, Task, User
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///eingaben.db'
@@ -57,14 +57,8 @@ def register():
 @app.route('/')
 @login_required
 def homepage():
-    if request.method == 'POST':
-        name = request.form['name']
-        new_person = Person(name=name)
-        db.session.add(new_person)
-        db.session.commit()
-    persons = Person.query.all()
     tasks = Task.query.filter_by(user_id=current_user.id).all()
-    return render_template('index.html', tasks=tasks, persons=persons)
+    return render_template('index.html', tasks=tasks)
 
 @app.route('/popup', methods=['POST','GET'])
 def popup():
@@ -92,14 +86,6 @@ def delete_task():
         db.session.delete(task)
     db.session.commit()
     return redirect(url_for('homepage'))
-
-@app.route('/delete', methods=['POST'])
-def delete_person():
-    person_id = request.json['id']
-    person = Person.query.get(person_id)
-    db.session.delete(person)
-    db.session.commit()
-    return jsonify({'message': 'Person deleted successfully'})
 
 @app.route('/update_task_status/<int:task_id>', methods=['POST'])
 def update_task_status(task_id):
