@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, flash
 from flask_wtf import CSRFProtect
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, Task, User
 
 app = Flask(__name__)
@@ -23,7 +23,7 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
         user = User.query.filter_by(username=username).first()
-        if user and user.check_password(password):
+        if user and check_password_hash(user.password_hash, password):
             login_user(user)
             return redirect(url_for('homepage'))
         else:
@@ -97,7 +97,7 @@ def update_task_status(task_id):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000) #wird benötigt damit man vom lokalen Netz zugreifen kann
+    #app.run(host='0.0.0.0', port=5000) #wird benötigt damit man vom lokalen Netz zugreifen kann
     with app.app_context():
         db.create_all()
     app.run(debug=True)
