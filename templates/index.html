@@ -28,8 +28,11 @@
     </div>
   </div>
 
-
-</form>
+  <!-- <form method="POST" action="/">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+    <button type="submit">Add Person</button>
+</form> -->
 
   <form id="deleteForm" method="post" action="{{ url_for('delete_task') }}">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
