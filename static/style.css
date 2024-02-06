@@ -4,6 +4,8 @@ body {
 
 h1 {
   font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+
 }
 table{
   width: 65%;
