@@ -19,11 +19,12 @@
         <label for="date">Enter date:</label>
         <input type="date" id="date" name="date" /><br />
 
-        <label for="person">Choose person:</label>
-        <input type="text" id="person" name="person" /><br>
-        <!-- <select name="" id=""></select>
-            <option value=""></option><input type="text" id="person" name="person" />
-        </select> -->
+        <label for="assigned_to">Choose person:</label>
+        <select name="assigned_to" id="assigned_to">
+            {% for user in users %}
+            <option value="{{ user.id }}">{{ user.username }}</option>
+            {% endfor %}
+        </select><br>
 
         <button id="cancel" type="button" onclick="closeWindow();">Cancel</button>
 

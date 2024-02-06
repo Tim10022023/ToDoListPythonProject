@@ -16,12 +16,19 @@ table{
 .task-done {
   text-decoration: line-through; 
   color: #2dc518; 
+  background-color: transparent !important;
 }
 
 .user-list-table{
   width:20%;
   display:flex;
   justify-content: space-around;
-  border: 1px solid black;
   margin: 10px;
+}
+.deleteUserClass{
+  cursor: pointer;
+}
+.deleteUserClass summary{
+  font-size: 20px;
+  font-weight: 500;
 }

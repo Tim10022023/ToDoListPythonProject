@@ -57,27 +57,28 @@ def register():
 @app.route('/')
 @login_required
 def homepage():
-    tasks = Task.query.filter_by(user_id=current_user.id).all()
+    tasks = Task.query.filter((Task.user_id == current_user.id) | ((Task.assigned_by_id == current_user.id) & (Task.user_id == current_user.id))).all()
     users = User.query.all()
     return render_template('index.html', tasks=tasks, users=users)
 
+
 @app.route('/popup', methods=['POST','GET'])
 def popup():
+    users = User.query.all()
     task_content=[]
     task_date=[]
-    task_person=[]
     task_done=False
     if request.method == 'POST' and current_user.is_authenticated:
         task_content = request.form["content"]
         task_date = request.form["date"]
-        task_person = request.form["person"]
+        assigned_to = request.form.get('assigned_to')
         task_done = 'done' in request.form
-        new_task = Task(content=task_content, date=task_date, person=task_person, done=task_done, user_id=current_user.id)
+       
+        new_task = Task(content=task_content, date=task_date, user_id=assigned_to,  assigned_by_id=current_user.id, done=task_done)
         db.session.add(new_task)
         db.session.commit()
         return "<script>window.opener.location.reload(); window.close();</script>"
-    return render_template('popup.html')
-
+    return render_template('popup.html', users=users)
 
 @app.route('/delete_task', methods=['POST'])
 def delete_task():
@@ -93,7 +94,10 @@ def delete_user():
     user_ids = request.form.getlist('user_ids')
     for user_id in user_ids:
         user = User.query.get_or_404(user_id)
-        db.session.delete(user)
+        if user == current_user:
+            flash('Sie können sich nicht selbst löschen.')
+        else:
+            db.session.delete(user)
     db.session.commit()
     return redirect(url_for('homepage'))
 
