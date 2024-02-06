@@ -14,7 +14,7 @@
     <h1>To-Do-Liste von Tim, Niklas & Noah</h1>
     <div style="display: flex; gap: 10px">
       <button id="NewItem" onclick="oeffnePopup()">New Item</button>
-      <button id="delete" form="deleteForm" type="submit">
+      <button id="delete" form="deleteTask" type="submit">
         <span class="large">&#x1F5D1;</span>
       </button>
       <form method="post" action="{{ url_for('logout') }}">
@@ -30,37 +30,43 @@
       </form>
     </div>
 
-    <h2>Registrierte Benutzer</h2>
-    <form
-      id="deleteUserForm"
-      method="post"
-      action="{{ url_for('delete_user') }}"
-    >
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-      <button type="submit">Ausgewählte Benutzer löschen</button>
-      <div class="user-list-table">
-        <table>
-          <thead>
-            <tr>
-              <th>Auswahl</th>
-              <th>Benutzername</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for user in users %}
-            <tr>
-              <td>
-                <input type="checkbox" name="user_ids" value="{{ user.id }}" />
-              </td>
-              <td>{{ user.username }}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </form>
+    <details class="deleteUserClass">
+      <summary>Registrierte Benutzer</summary>
+        <div class="user-list-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Benutzername</th>
+                <th>Löschen</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for user in users %}
+              <tr>
+                <td>{{ user.username }}</td>
+                <td>
+                  <form method="post" action="{{ url_for('delete_user') }}">
+                    <input
+                      type="hidden"
+                      name="csrf_token"
+                      value="{{ csrf_token() }}"
+                    />
+                    <input
+                      type="hidden"
+                      name="user_ids"
+                      value="{{ user.id }}"
+                    />
+                    <button class="UserDelete" type="submit">Löschen</button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+    </details>
 
-    <form id="deleteForm" method="post" action="{{ url_for('delete_task') }}">
+    <form id="deleteTask" method="post" action="{{ url_for('delete_task') }}">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
       <table>
         <thead>
@@ -76,7 +82,7 @@
           {% for task in tasks %}
           <tr
             class="{{ 'task-done' if task.done else '' }}"
-            
+            style="{{ 'background-color: #FFD700;' if task.assigned_by_id and task.assigned_by_id != current_user.id else '' }}"
           >
             <td>
               <input type="checkbox" name="task_ids" value="{{ task.id }}" />

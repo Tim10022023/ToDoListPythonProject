@@ -94,7 +94,10 @@ def delete_user():
     user_ids = request.form.getlist('user_ids')
     for user_id in user_ids:
         user = User.query.get_or_404(user_id)
-        db.session.delete(user)
+        if user == current_user:
+            flash('Sie können sich nicht selbst löschen.')
+        else:
+            db.session.delete(user)
     db.session.commit()
     return redirect(url_for('homepage'))
 

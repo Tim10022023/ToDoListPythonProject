@@ -58,7 +58,7 @@
       0 0 9px 3px #1fc01170;
   }
   
-#cancel, #delete{
+#cancel, #delete {
     --rot: #c90000;
     font-size: 15px;
     padding: 0.7em 2.7em;
