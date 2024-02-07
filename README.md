@@ -1,10 +1,10 @@
 Hallo
-Wir werden eine To-Do-Liste mit Python erstellen. Wir planen, einige nette Funktionen wie eine Erinnerung und eine solide Suchfunktion aufzunehmen.
+Wir werden eine To-Do-Liste mit Python stellen. Wir planen, einige nette Funktionen wie eine Erinnerung und eine solide solche Funktion aufzunehmen.
 Habe Spaß!
 
 
 
-# Bewertungskriterien Programmieren T3INF1004
+# Durchführungskriterien Programmieren T3INF1004
 In jedem Unterbereich werden die Punkte (gerne auch Links ins GIT) erklärt, wie das LO erklärt worden ist.
 Alle Kriterien betreffen nur die Projektarbeit. Beweismaterial kommt aus dem Gruppenprojekt.
 
@@ -12,21 +12,21 @@ Alle Kriterien betreffen nur die Projektarbeit. Beweismaterial kommt aus dem Gru
 
 # Die Studien kennen die Grundelemente der prozeduralen Programmierung. (10)
 ### Anwendung der Syntax: Deklaration von Funktionen und Routen
-```
+```Python
 @ app.route ('/ login', Methoden = ['GET','POST'])
 def login ():
  # Implementierung der Logik für den Login
 ```
 
 ### If-Modus
-```python
+```Python
  wenn request.method == 'POST' und current_user.is_authenticated:
  task_content = request.form ["Inhalt"]
  task_date = request.form ["Datum"]
  zugewiesen_to = request.form.get ('zugewiesen_to')
  task_done = 'erledigt' in request.form
        
- new_task = Task (content = task_content, date = task_date, user_id = zugewiesen_to, zugewiesen_by_id = current_user.id, done = task_done)
+ new_task = Task (Inhalt = task_content, date = task_date, user_id = zugewiesen_to, zugewiesen_by_id = current_user.id, done = task_done)
  db.session.add (new_task)
  db.session.commit ()
 ```
@@ -47,7 +47,7 @@ users = User.query.all ()
 {% endfor%}
 ```
 ### Einsatz von Bibliotheken
-```
+```Python
 vom Kolbenimport Kolben, render_template, request, umleiten, url_for, jsonify, blitz
 aus flask_wtf CSRFProtect importieren
 aus flask_login importieren LoginManager, login_user, logout_user, login_required, current_user
@@ -55,12 +55,12 @@ aus werkzeug.security import genere_password_hash, check_password_hash
 von Modellen importieren db, Aufgabe, Benutzer
 ```
 
-# Sie können ein großes Programm selbständig entwerfen, programmieren und auf Funktionen, die testen (Das Projekt im Team) (10)
-[!Git Commits](/Grading/commits.png.)
-[!Git Commits2](/ Grading / Commits2.png.)
+# Sie können ein großes Programm selbstverständlich, programmieren und auf Funktionen, die testen (Das Projekt im Team) (10)
+[Git Commits!](/Grading/commits.png.)
+[Git Commits2!](/ Grading / Commits2.png.)
 
 # Sie kennen verschiedene Datenstrukturen und können diese exemplarisch anwenden. (10)
-```  
+```python  
     users = User.query.all()
     task_content=[]
     task_date=[]
@@ -81,9 +81,9 @@ Natürlich sind wir auch auf den Rest unseres Codes stolz.
 
 # Die Studierenden können eine Entwicklungsumgebung verwenden um Programme zu erstellen (10)
 <!-- Beweise anbringen für Nutzen folgender Tools (können links, screenshots und screnncasts sein) -->
-[GIT](https://github.com/Tim10022023/ToDoListPythonProject)
-VS Code
-DB Browser for SQLite
+- [GIT](https://github.com/Tim10022023/ToDoListPythonProject)
+- VS Code
+- DB Browser for SQLite
 
 
 
@@ -112,7 +112,7 @@ Niklas: Im HTML Problem dass die Popup-Seite nicht geschlossen wird wenn auf Sav
 # Die Studierenden können eigenständig Problemstellungen der Praxis analysieren und zu deren Lösung Programme entwerfen (30)
 <!-- Which parts of your project are you proud of and why (describe, analyse, link) -->
 ### Delete User
-```
+```python
 @app.route('/delete_user', methods=['POST'])
 def delete_user():
     user_ids = request.form.getlist('user_ids')
@@ -146,75 +146,75 @@ def delete_user():
           method: "POST",
           body: JSON.stringify({ done: doneStatus }),
           headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": csrfToken,
-          },
+ "Inhaltstyp": "Anwendung / Json",
+ "X-CSRFToken": csrfToken,
+ },
         }).then((response) => {});
       }
 ```
 <!-- Where were the problems with your implementation, timeline, functionality, team management (describe, analyse, reflect from past to future, link if relevant) -->
 
-Problem: User können nur angelgt werde allerdings nicht gelöscht werden (Lösung oben)
-Problem: Checkboxen werden nach neuladen immer zurückgesetzt (Ajax Code implementiert)
+Problem: Benutzer können nur Engelgt werden allerdings nicht gelöscht werden
+Problem: Kontrollkästchen werden nach neuladen immer wieder hergestellt
 
-## Kenntnisse in prozeduraler Programmierung:
+## Kenntisse in prozeduraler Programmierung:
 
 # - Algorithmenbeschreibung
 
 # - Datentypen
-```
-class Task(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.String(255), nullable=False)
-    done = db.Column(db.Boolean, default=False)
+```Python
+Klassenaufgabe (db.Model):
+ id = db.Column (db.Integer, primär_key = True)
+ content = db.Column (db.String (255), nullable = False)
+ done = db.Column (db.Boolean, Standard = False)
 ```
 
-# - E/A-Operationen und Dateiverarbeitung
-```
-from models import db, Task, User
+# - E / A-Operationen und Daceiverarbeitung
+```Python
+von Modellen importieren db, Aufgabe, Benutzer
 
-task_content = request.form["content"]
+task_content = request.form ["Inhalt"]
 ```
 
 
 # - Operatoren
-```
- if request.method == 'POST' and current_user.is_authenticated: (z. 71)
- if user and check_password_hash(user.password_hash, password): (z. 26)
- tasks = Task.query.filter((Task.user_id == current_user.id) | ((Task.assigned_by_id == current_user.id) & (Task.user_id == current_user.id))).all() (z.59)
+```Python
+ wenn request.method == 'POST' und current_user.is_authenticated: (z. 71)
+ wenn Benutzer und check_password_hash (user.password_hash, Passwort): (z. 26)
+ Aufgaben = Task.query.filter ((Task.user_id == current_user.id) | ((Task.assigned_by_id == current_user.id) & (Task.user_id == current_user.id)) .all (z.59)
 ```
 # - Kontrollstrukturen
-```
-for task_id in task_ids:
-    task = Task.query.get_or_404(task_id)
+```Python
+für task_id in task_ids:
+ task = Task.query.get_or_404 (task_id)
 ```
 
 # - Funktionen
-```
-@app.route('/')
+```Python
+@ app.route ('/')
 @login_required
-def homepage():
-    tasks = Task.query.filter((Task.user_id == current_user.id) | ((Task.assigned_by_id == current_user.id) & (Task.user_id == current_user.id))).all()
-    users = User.query.all()
-    return render_template('index.html', tasks=tasks, users=users)
+def Homepage ():
+ Aufgaben = Task.query.filter ((Task.user_id == current_user.id) | ((Task.assigned_by_id == current_user.id) & (Task.user_id == current_user.id)) .all ()
+ users = User.query.all ()
+ return render_template ('index.html', Aufgaben = Aufgaben, Benutzer = Benutzer)
 ```
 
 # - Stringverarbeitung
 
-``return redirect(url_for('homepage'))``
+``return redirect (url_for ('homepage'))``
 
 
-# - Strukturierte Datentypen
-```
-class Task(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    content = db.Column(db.String(255), nullable=False)
-    date = db.Column(db.String(255), nullable=False)
-    done = db.Column(db.Boolean, default=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) 
-    assigned_by_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)  
+# - Strukturierte Datentype
+```Python
+Klassenaufgabe (db.Model):
+ id = db.Column (db.Integer, primär_key = True, autoincrement = True)
+ content = db.Column (db.String (255), nullable = False)
+ date = db.Column (db.String (255), nullable = False)
+ done = db.Column (db.Boolean, Standard = False)
+ user_id = db.Column (db.Integer, db.ForeignKey ('user.id'), nullable = False) 
+ zugewiesene_by_id = db.Column (db.Integer, db.ForeignKey ('user.id'), nullable = True) 
 
-    user = db.relationship('User', foreign_keys=[user_id], backref=db.backref('tasks', lazy=True))
-    assigned_by = db.relationship('User', foreign_keys=[assigned_by_id], backref=db.backref('assigned_tasks', lazy=True))
+ Benutzer = db.relationship ('Benutzer', Foreign_keys = [user_id], backref = db.backref ('tasks', faul = True))
+ zugewiesen_by = db.relationship ('Benutzer', Foreign_keys = [zugewiesen_by_id], backref = db.backref ('zugewiesene_tasks', faul = wahr))
 ```
 
