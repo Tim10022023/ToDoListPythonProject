@@ -48,7 +48,7 @@ users = User.query.all ()
 ```
 ### Einsatz von Bibliotheken
 ```Python
-vom Kolbenimport Kolben, render_template, request, umleiten, url_for, jsonify, blitz
+vom Flask import Flask, render_template, request, umleiten, url_for, jsonify, blitz
 aus flask_wtf CSRFProtect importieren
 aus flask_login importieren LoginManager, login_user, logout_user, login_required, current_user
 aus werkzeug.security import genere_password_hash, check_password_hash
