@@ -1,5 +1,5 @@
 Hallo
-Wir werden eine To-Do-Liste mit Python stellen. Wir planen, einige nette Funktionen wie eine Erinnerung und eine solide solche Funktion aufzunehmen.
+Wir werden eine To-Do-Liste mit Python-Sellen. Wir planen, einige nette Funktionen wie eine Erinnerung und eine solide solche Funktion aufzunehmen.
 Habe Spaß!
 
 
@@ -48,7 +48,7 @@ users = User.query.all ()
 ```
 ### Einsatz von Bibliotheken
 ```Python
-vom Flask import Flask, render_template, request, umleiten, url_for, jsonify, blitz
+vom Kolbenimport Kolben, render_template, request, umleiten, url_for, jsonify, blitz
 aus flask_wtf CSRFProtect importieren
 aus flask_login importieren LoginManager, login_user, logout_user, login_required, current_user
 aus werkzeug.security import genere_password_hash, check_password_hash
@@ -59,38 +59,38 @@ von Modellen importieren db, Aufgabe, Benutzer
 [Git Commits!](/Grading/commits.png.)
 [Git Commits2!](/ Grading / Commits2.png.)
 
-# Sie kennen verschiedene Datenstrukturen und können diese exemplarisch anwenden. (10)
-```python  
-    users = User.query.all()
-    task_content=[]
-    task_date=[]
-    task_done=False
-    if request.method == 'POST' and current_user.is_authenticated:
-        task_content = request.form["content"]
-        task_date = request.form["date"]
-        assigned_to = request.form.get('assigned_to')
-        task_done = 'done' in request.form
-        new_task = Task(content=task_content, date=task_date, user_id=assigned_to,  assigned_by_id=current_user.id, done=task_done)
-        db.session.add(new_task)
-        db.session.commit() 
+# Sie kennen verschiedene Datenstrukturen und können diese bestimmte Welle werden. (10)
+```Python 
+ users = User.query.all ()
+ task_content = []
+ task_date = []
+ task_done = Falsch
+ wenn request.method == 'POST' und current_user.is_authenticated:
+ task_content = request.form ["Inhalt"]
+ task_date = request.form ["Datum"]
+ zugewiesen_to = request.form.get ('zugewiesen_to')
+ task_done = 'erledigt' in request.form
+ new_task = Task (content = task_content, date = task_date, user_id = zugewiesen_to, zugewiesen_by_id = current_user.id, done = task_done)
+ db.session.add (new_task)
+ db.session.commit () 
 ```
-in diesem Teil des Codes werden die Daten, die im Popup-Fenster eingetrtagen worden sind, gelesen und in die Datenbank gespeichert wo sie dann für die homepage zugänglich sind.
-Natürlich sind wir auch auf den Rest unseres Codes stolz.
+in diesem Teil des Codes werden die Daten, die im Popup-Fenster eingetrtagen worden sind, gelesen und in der Datenbank wird sie für die Homepage sicher sind.
+Natürlich sind wir auch auf den Rest unserer Codes stolz.
 
 ## METHODENKOMPETENZ (10 Punkte)
 
-# Die Studierenden können eine Entwicklungsumgebung verwenden um Programme zu erstellen (10)
+# Die Studien können eine Entwicklungsumgebung werden um Programm zu stellen (10)
 <!-- Beweise anbringen für Nutzen folgender Tools (können links, screenshots und screnncasts sein) -->
 - [GIT](https://github.com/Tim10022023/ToDoListPythonProject)
-- VS Code
-- DB Browser for SQLite
+- VS-Code
+- DB-Browser für SQLite
 
 
 
 
 ## PERSONALE UND SOZIALE KOMPETENZ (20 Punkte)
 
-# Die Studierenden können ihre Software erläutern und begründen. (5)
+# Die Studien können ihre Software kennen und verlassen. (5)
 Noah: Probleme mit Github -> Branch konnte nicht gemerget werden (erklärt online mit Bildschirm)
 Tim: Datenbank konnte nicht geleseen werden -> hat ``db.session.commit()`` gefehlt, Namensgebung in der DB angepasst
 Niklas: Im HTML Problem dass die Popup-Seite nicht geschlossen wird wenn auf Save geklickt wird, wurde gelöst durch ``return "<script>window.opener.location.reload(); window.close();</script>"`` in der app.py datei
