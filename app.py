@@ -42,7 +42,6 @@ def register():
     password = request.form.get('password')
 
     if User.query.filter_by(username=username).first():
-        # Benutzername bereits vergeben
         flash('Benutzername ist bereits vergeben.')
         return redirect(url_for('login'))
 

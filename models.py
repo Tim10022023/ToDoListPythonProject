@@ -9,8 +9,8 @@ class Task(db.Model):
     content = db.Column(db.String(255), nullable=False)
     date = db.Column(db.String(255), nullable=False)
     done = db.Column(db.Boolean, default=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)  # Der Benutzer, dem die Aufgabe zugeordnet ist
-    assigned_by_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)  # Der Benutzer, der die Aufgabe zugewiesen hat
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False) 
+    assigned_by_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)  
 
     user = db.relationship('User', foreign_keys=[user_id], backref=db.backref('tasks', lazy=True))
     assigned_by = db.relationship('User', foreign_keys=[assigned_by_id], backref=db.backref('assigned_tasks', lazy=True))
