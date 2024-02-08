@@ -21,11 +21,11 @@ table{
 
 .task-done-not-me{
   color: #2dc518; 
-  background-color: brown;
+  background-color: grey;
 }
 
 .task-not-done-not-me{
-  background-color: brown;
+  background-color: grey;
 }
 
 .task-not-done-me{
