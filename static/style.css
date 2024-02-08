@@ -1,7 +1,46 @@
 body {
-  background: lightblue;
+  background: #add8e6;
 }
 
 h1 {
   font-family: Arial, Helvetica, sans-serif;
+}
+table{
+  width: 65%;
+  text-align: center;
+}
+.large{
+  font-size: 25px;
+}
+
+.task-done-me {
+  text-decoration: line-through; 
+  color: #2dc518; 
+  background-color: beige;
+}
+
+.task-done-not-me{
+  color: #2dc518; 
+  background-color: brown;
+}
+
+.task-not-done-not-me{
+  background-color: brown;
+}
+
+.task-not-done-me{
+  background-color: beige;
+}
+
+.user-list-table{
+  width:20%;
+  display:flex;
+  justify-content: space-around;
+  margin: 10px;
+}
+
+.deleteUserClass summary{
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
 }
