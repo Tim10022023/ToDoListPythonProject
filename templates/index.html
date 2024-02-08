@@ -76,16 +76,17 @@
             <th>Date</th>
             <th>Created by</th>
             <th>Done</th>
+            <th>Due Soon</th> <!-- Neue Spalte hinzugefügt -->
           </tr>
         </thead>
         <tbody>
           {% for task in tasks %}
           <tr
-          class="{{ 'task-done-me' if task.done and task.assigned_by_id == current_user.id else '' }} 
-          {{ 'task-done-not-me' if task.done and task.assigned_by_id != current_user.id else '' }} 
-          {{ 'task-not-done-me' if not task.done and task.assigned_by_id == current_user.id else '' }} 
-          {{ 'task-not-done-not-me' if not task.done and task.assigned_by_id != current_user.id else '' }}"
-             >
+            class="{{ 'task-done-me' if task.done and task.assigned_by_id == current_user.id else '' }} 
+            {{ 'task-done-not-me' if task.done and task.assigned_by_id != current_user.id else '' }} 
+            {{ 'task-not-done-me' if not task.done and task.assigned_by_id == current_user.id else '' }} 
+            {{ 'task-not-done-not-me' if not task.done and task.assigned_by_id != current_user.id else '' }}"
+          >
             <td>
               <input type="checkbox" name="task_ids" value="{{ task.id }}" />
             </td>
@@ -100,21 +101,24 @@
                 name="done_{{ task.id }}"
                 data-task-id="{{ task.id }}"
                 onchange="updateTaskStatus(this)"
-                {%
-                if
-                task.done
-                %}
+                {% if task.done %}
                 checked
-                {%
-                endif
-                %}
+                {% endif %}
               />
+            </td>
+            <td>
+              {% if task.due_soon %}
+                Yes
+              {% else %}
+                No
+              {% endif %}
             </td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
     </form>
+    
 
     <script>
       $(document).ready(function () {

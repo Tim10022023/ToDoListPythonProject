@@ -3,6 +3,7 @@ from flask_wtf import CSRFProtect
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, Task, User
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///eingaben.db'
@@ -12,6 +13,11 @@ db.init_app(app)
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
+
+def check_due_date(task_date_string):
+    task_date = datetime.strptime(task_date_string, "%Y-%m-%d").date()
+    due_date = datetime.now().date() + timedelta(days=1)
+    return task_date <= due_date
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -57,6 +63,8 @@ def register():
 @login_required
 def homepage():
     tasks = Task.query.all()
+    for task in tasks:
+        task.due_soon = check_due_date(task.date)
     users = User.query.all()
     return render_template('index.html', tasks=tasks, users=users)
 
