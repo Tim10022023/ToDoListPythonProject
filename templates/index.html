@@ -81,9 +81,11 @@
         <tbody>
           {% for task in tasks %}
           <tr
-            class="{{ 'task-done' if task.done else '' }}"
-            style="{{ 'background-color: #005eff;' if task.assigned_by_id and task.assigned_by_id != current_user.id else '' }}"
-          >
+          class="{{ 'task-done-me' if task.done and task.assigned_by_id == current_user.id else '' }} 
+          {{ 'task-done-not-me' if task.done and task.assigned_by_id != current_user.id else '' }} 
+          {{ 'task-not-done-me' if not task.done and task.assigned_by_id == current_user.id else '' }} 
+          {{ 'task-not-done-not-me' if not task.done and task.assigned_by_id != current_user.id else '' }}"
+             >
             <td>
               <input type="checkbox" name="task_ids" value="{{ task.id }}" />
             </td>

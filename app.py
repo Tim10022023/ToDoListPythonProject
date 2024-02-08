@@ -56,7 +56,7 @@ def register():
 @app.route('/')
 @login_required
 def homepage():
-    tasks = Task.query.filter((Task.user_id == current_user.id) | ((Task.assigned_by_id == current_user.id) & (Task.user_id == current_user.id))).all()
+    tasks = Task.query.all()
     users = User.query.all()
     return render_template('index.html', tasks=tasks, users=users)
 

@@ -13,10 +13,23 @@ table{
   font-size: 25px;
 }
 
-.task-done {
+.task-done-me {
   text-decoration: line-through; 
   color: #2dc518; 
-  background-color: transparent !important;
+  background-color: beige;
+}
+
+.task-done-not-me{
+  color: #2dc518; 
+  background-color: brown;
+}
+
+.task-not-done-not-me{
+  background-color: brown;
+}
+
+.task-not-done-me{
+  background-color: beige;
 }
 
 .user-list-table{
