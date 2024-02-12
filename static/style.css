@@ -20,6 +20,7 @@ table{
 }
 
 .task-done-not-me{
+  text-decoration: line-through;
   color: #2dc518; 
   background-color: grey;
 }
