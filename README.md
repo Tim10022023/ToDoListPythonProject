@@ -56,8 +56,8 @@ from models import db, Task, User, UserMixin
 ```
 
 # Sie können ein großes Programm selbstverständlich, programmieren und auf Funktionen, die testen (Das Projekt im Team) (10)
-[Git Commits!](./Grading/commits.png)
-[Git Commits2!](./Grading/commits2.png)
+![Git Commits!](./Grading/commits.png)
+![Git Commits2!](./Grading/commits2.png)
 
 # Sie kennen verschiedene Datenstrukturen und können diese bestimmte Welle werden. (10)
 ```Python 
