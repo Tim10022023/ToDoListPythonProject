@@ -107,9 +107,14 @@ def delete_user():
         if user == current_user:
             flash('Sie können sich nicht selbst löschen.')
         else:
+            # Löschen aller Aufgaben, die dem Benutzer zugeordnet sind
+            Task.query.filter((Task.user_id == user_id) | (Task.assigned_by_id == user_id)).delete()
+            
+            # Jetzt den Benutzer löschen
             db.session.delete(user)
     db.session.commit()
     return redirect(url_for('homepage'))
+
 
 @app.route('/update_task_status/<int:task_id>', methods=['POST'])
 def update_task_status(task_id):
