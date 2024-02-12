@@ -31,7 +31,7 @@ def login ():
  db.session.commit ()
 ```
 ### Variablen und Datentypen
-```
+```python
  task_content = request.form ["content"]
  task_date = request.form ["date"]
  task_done = 'done' in request.form
@@ -64,7 +64,7 @@ from models import db, Task, User, UserMixin
  users = User.query.all ()
  task_content = []
  task_date = []
- task_done = Falsch
+ task_done = false
  if request.method == 'POST' and current_user.is_authenticated:
  task_content = request.form ["Inhalt"]
  task_date = request.form ["Datum"]
@@ -97,6 +97,7 @@ Niklas: Im HTML Problem dass die Popup-Seite nicht geschlossen wird wenn auf Sav
 
 # Sie können existierenden Code analysieren und beurteilen. (5)
 <!-- Pro Gruppe:You have critiqued another group project. Link to your critique here (another wiki page on your git) and link the project in the critique, use these evaluation criteria to critique the other project. Make sure they get a top grade after making the suggested changes -->
+[Hier](https://github.com/Tim10022023/ToDoListPythonProject/wiki/Critique-for-the-group:-Discord%E2%80%90Reminder%E2%80%90Bot) ein Link zu einer Kritik
 
 # Sie können sich selbstständig in Entwicklungsumgebungen und Technologien einarbeiten und diese zur Programmierung und Fehlerbehebung einsetzen. (10)
 - Flask (flask, flask_login)
