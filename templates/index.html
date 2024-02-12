@@ -81,13 +81,10 @@
         </thead>
         <tbody>
           {% for task in tasks %}
-          <tr
-            class="{{ 'task-done-me' if task.done and task.assigned_by_id == current_user.id else '' }} 
-            {{ 'task-done-not-me' if task.done and task.assigned_by_id != current_user.id else '' }} 
-            {{ 'task-not-done-me' if not task.done and task.assigned_by_id == current_user.id else '' }} 
-            {{ 'task-not-done-not-me' if not task.done and task.assigned_by_id != current_user.id else '' }}"
-          >
-            <td>
+          <tr class="{% if task.done %}task-done{% else %}{{ 'task-not-done-me' if task.assigned_by_id == current_user.id else 'task-not-done-not-me' }}{% endif %}"
+          data-task-id="{{ task.id }}"
+          data-assigned-by-id="{{ task.assigned_by_id }}">
+                  <td>
               <input type="checkbox" name="task_ids" value="{{ task.id }}" />
             </td>
             <td>{{ task.content }}</td>
@@ -98,24 +95,18 @@
             <td>
               <input
                 type="checkbox"
-                name="done_{{ task.id }}"
-                data-task-id="{{ task.id }}"
                 onchange="updateTaskStatus(this)"
-                {% if task.done %}
-                checked
-                {% endif %}
+                data-task-id="{{ task.id }}"
+                {% if task.done %} checked {% endif %}
               />
             </td>
             <td>
-              {% if task.due_soon %}
-                Yes
-              {% else %}
-                No
-              {% endif %}
+              {% if task.due_soon %} Yes {% else %} No {% endif %}
             </td>
           </tr>
           {% endfor %}
         </tbody>
+        
       </table>
     </form>
     
@@ -138,29 +129,41 @@
       });
 
       function updateTaskStatus(checkbox) {
-        const taskId = checkbox.getAttribute("data-task-id");
-        const doneStatus = checkbox.checked ? 1 : 0;
-        const csrfToken = document
-          .querySelector('meta[name="csrf-token"]')
-          .getAttribute("content");
+    const taskId = checkbox.getAttribute("data-task-id");
+    const doneStatus = checkbox.checked;
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+    const row = checkbox.closest("tr");
+    const assignedById = row.getAttribute("data-assigned-by-id");
+    const currentUserId = "{{ current_user.id }}";  // Stellen Sie sicher, dass dies korrekt ist
 
-        var row = checkbox.closest("tr");
+    // Entfernen Sie zunächst alle zustandsbezogenen Klassen
+    row.classList.remove("task-done", "task-not-done-me", "task-not-done-not-me");
 
-        if (checkbox.checked) {
-          row.classList.add("task-done");
-        } else {
-          row.classList.remove("task-done");
-        }
+    // Dann fügen Sie die entsprechenden Klassen basierend auf dem Status und dem Ersteller der Aufgabe hinzu
+    if (doneStatus) {
+        row.classList.add("task-done");
+    } else if (assignedById === currentUserId) {
+        row.classList.add("task-not-done-me");
+    } else {
+        row.classList.add("task-not-done-not-me");
+    }
 
-        fetch(`/update_task_status/${taskId}`, {
-          method: "POST",
-          body: JSON.stringify({ done: doneStatus }),
-          headers: {
+    // Senden Sie die Änderung an den Server
+    fetch(`/update_task_status/${taskId}`, {
+        method: "POST",
+        body: JSON.stringify({ done: doneStatus }),
+        headers: {
             "Content-Type": "application/json",
             "X-CSRFToken": csrfToken,
-          },
-        }).then((response) => {});
-      }
+        },
+    }).then(response => {
+        if (!response.ok) {
+            console.error('Error updating task status');
+        }
+    });
+}
+
+
 
       function oeffnePopup() {
         var popup = window.open("/popup", "_blank", "width=400,height=400");

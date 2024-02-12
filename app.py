@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify, f
 from flask_wtf import CSRFProtect
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import db, Task, User
+from models import db, Task, User, UserMixin
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
@@ -15,9 +15,12 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 def check_due_date(task_date_string):
+    if not task_date_string:  # Überprüft, ob der String leer ist
+        return False  # oder eine andere geeignete Antwort
     task_date = datetime.strptime(task_date_string, "%Y-%m-%d").date()
     due_date = datetime.now().date() + timedelta(days=1)
     return task_date <= due_date
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -104,9 +107,14 @@ def delete_user():
         if user == current_user:
             flash('Sie können sich nicht selbst löschen.')
         else:
+            # Löschen aller Aufgaben, die dem Benutzer zugeordnet sind
+            Task.query.filter((Task.user_id == user_id) | (Task.assigned_by_id == user_id)).delete()
+            
+            # Jetzt den Benutzer löschen
             db.session.delete(user)
     db.session.commit()
     return redirect(url_for('homepage'))
+
 
 @app.route('/update_task_status/<int:task_id>', methods=['POST'])
 def update_task_status(task_id):
