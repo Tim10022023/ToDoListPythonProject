@@ -172,6 +172,14 @@ Problem: Kontrollkästchen werden nach neuladen immer wieder hergestellt
 ## Kenntisse in prozeduraler Programmierung:
 
 # - Algorithmenbeschreibung
+```Python
+def check_due_date(task_date_string):
+    if not task_date_string:  # Überprüft, ob der String leer ist
+        return False  # oder eine andere geeignete Antwort
+    task_date = datetime.strptime(task_date_string, "%Y-%m-%d").date()
+    due_date = datetime.now().date() + timedelta(days=1)
+    return task_date <= due_date
+```
 
 # - Datentypen
 ```Python
