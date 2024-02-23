@@ -112,21 +112,7 @@
     
 
     <script>
-      $(document).ready(function () {
-        $(".delete-btn").on("click", function () {
-          var personId = $(this).data("id");
-          $.ajax({
-            url: "/delete",
-            method: "POST",
-            contentType: "application/json",
-            data: JSON.stringify({ id: personId }),
-            success: function (response) {
-              $("#person-" + personId).remove();
-              alert(response.message);
-            },
-          });
-        });
-      });
+
 
       function updateTaskStatus(checkbox) {
     const taskId = checkbox.getAttribute("data-task-id");
