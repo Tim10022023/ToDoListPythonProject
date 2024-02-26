@@ -1,1 +1,1 @@
-[Hier](https://github.com/Tim10022023/ToDoListPythonProject/wiki/Critique-for-the-group:-Discord%E2%80%90Reminder%E2%80%90Bot) ein Link zu einer Kritik
+[Hier](https://github.com/Tim10022023/ToDoListPythonProject/wiki/Critique-for-the-group:-Weather%E2%80%90App) ein Link zu einer Kritik
