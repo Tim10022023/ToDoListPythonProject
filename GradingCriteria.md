@@ -97,7 +97,7 @@ Niklas: Im HTML Problem dass die Popup-Seite nicht geschlossen wird wenn auf Sav
 
 # Sie können existierenden Code analysieren und beurteilen. (5)
 <!-- Pro Gruppe:You have critiqued another group project. Link to your critique here (another wiki page on your git) and link the project in the critique, use these evaluation criteria to critique the other project. Make sure they get a top grade after making the suggested changes -->
-[Hier](https://github.com/Tim10022023/ToDoListPythonProject/wiki/Critique-for-the-group:-Discord%E2%80%90Reminder%E2%80%90Bot) ein Link zu einer Kritik
+[Hier](https://github.com/Tim10022023/ToDoListPythonProject/wiki/Critique-for-the-group:-Weather%E2%80%90App) ein Link zu einer Kritik
 
 
 
